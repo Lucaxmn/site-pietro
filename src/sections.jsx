@@ -366,9 +366,10 @@ export function PartnerStrip() {
                 <div className="font-mono text-[9px] tracking-[0.35em] uppercase mb-1.5" style={{ color: "rgba(255,140,60,0.5)" }}>
                   Cupom do atleta
                 </div>
-                <div className="font-display text-4xl md:text-5xl tracking-wider"
+                <div className="flex items-center gap-2 font-display text-4xl md:text-5xl tracking-wider"
                      style={{ color: "#ff7000", textShadow: "0 0 28px rgba(255,90,0,0.85)" }}>
-                  NAGEL
+                  <span style={{ textShadow: "none", fontSize: "0.82em" }}>🎟️</span>
+                  <span>NAGEL</span>
                 </div>
               </div>
               <div className="w-px self-stretch" style={{ background: "rgba(255,110,0,0.18)" }} />
