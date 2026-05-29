@@ -209,7 +209,7 @@ export function Hero() {
            style={{ background: "radial-gradient(circle, rgba(30,80,255,0.32) 0%, rgba(30,80,255,0) 65%)" }} />
       <div className="absolute -bottom-32 -left-32 w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full pointer-events-none"
            style={{ background: "radial-gradient(circle, rgba(10,43,204,0.22) 0%, rgba(10,43,204,0) 65%)" }} />
-      <div className="absolute inset-0 grid-lines opacity-55" />
+      <div className="absolute inset-0 grid-lines opacity-25" />
 
       {/* 3D canvas */}
       <div className="absolute inset-0 z-0">
@@ -300,7 +300,7 @@ export function PartnerStrip() {
       <div className="absolute inset-0 pointer-events-none"
            style={{ backgroundImage: "linear-gradient(to right, transparent 0%, rgba(30,80,255,0.05) 50%, transparent 100%)" }} />
 
-      <div className="max-w-7xl mx-auto px-5 md:px-10 py-16 md:py-24 flex flex-col lg:flex-row items-center justify-between gap-14">
+      <div className="max-w-7xl mx-auto px-5 md:px-10 py-12 md:py-20 flex flex-col lg:flex-row items-center justify-between gap-10 md:gap-14">
 
         {/* Brand image */}
         <div className="w-full lg:w-[40%] shrink-0">
@@ -341,8 +341,8 @@ export function PartnerStrip() {
             <span className="font-mono text-[11px] tracking-[0.28em] text-blue-bright uppercase">Parceria oficial</span>
           </div>
 
-          <h2 className="font-display text-6xl md:text-7xl xl:text-8xl text-white tracking-tight leading-none"
-              style={{ textShadow: "0 0 50px rgba(58,120,255,0.28)" }}>
+          <h2 className="font-display text-5xl md:text-6xl xl:text-7xl text-white tracking-tight leading-none"
+              style={{ textShadow: "0 0 40px rgba(58,120,255,0.22)" }}>
             {S.links.parceiroNome}
           </h2>
 
@@ -406,13 +406,13 @@ export function PartnerStrip() {
 
 export function Jornada() {
   return (
-    <section id="jornada" className="relative py-24 md:py-36 scroll-mt-24">
+    <section id="jornada" className="relative py-16 md:py-32 scroll-mt-24">
       <div className="max-w-7xl mx-auto px-5 md:px-8 grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
 
         <div className="lg:col-span-7">
           <Reveal><SectionLabel num="01">Sobre / Minha jornada</SectionLabel></Reveal>
           <Reveal delay={80}>
-            <h2 className="font-display text-5xl md:text-7xl leading-[0.9] tracking-tight mb-8">
+            <h2 className="font-display text-4xl md:text-6xl leading-[0.9] tracking-tight mb-6">
               {S.jornada.titulo}<span className="text-blue-bright">.</span>
             </h2>
           </Reveal>
@@ -445,7 +445,7 @@ export function Jornada() {
         <div className="lg:col-span-5">
           <Reveal delay={150}>
             <div className="relative">
-              <ImageSlot label="RETRATO" src={S.retrato} ratio="aspect-[4/5]" className="box-glow" />
+              <ImageSlot label="RETRATO" src={S.retrato} ratio="aspect-[4/5]" />
               {/* Athlete label */}
               <div className="absolute top-4 right-4">
                 <span className="font-mono text-[9px] tracking-[0.3em] text-white/30 uppercase border border-white/10 px-2 py-1 bg-ink/55 backdrop-blur">
@@ -549,11 +549,11 @@ export function Evolucao() {
   };
 
   return (
-    <section id="evolucao" className="relative py-24 md:py-36 bg-panel2 border-y border-white/10 scroll-mt-24">
+    <section id="evolucao" className="relative py-16 md:py-32 bg-panel2 border-y border-white/10 scroll-mt-24">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
         <Reveal><SectionLabel num="02">Transformação</SectionLabel></Reveal>
         <Reveal delay={80}>
-          <h2 className="font-display text-5xl md:text-7xl leading-[0.9] tracking-tight mb-14">
+          <h2 className="font-display text-4xl md:text-6xl leading-[0.9] tracking-tight mb-10 md:mb-14">
             A <span className="stroke-text-blue">EVOLUÇÃO</span>
           </h2>
         </Reveal>
@@ -833,7 +833,7 @@ export function Galeria() {
   }, [lightbox]);
 
   return (
-    <section id="galeria" className="relative py-24 md:py-36 scroll-mt-24">
+    <section id="galeria" className="relative py-16 md:py-32 scroll-mt-24">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
 
         {/* ── Header ── */}
@@ -854,8 +854,8 @@ export function Galeria() {
           </Reveal>
 
           <Reveal delay={70}>
-            <h2 className="font-display text-5xl md:text-7xl leading-[0.9] tracking-tight">
-              O <span className="text-blue-bright" style={{ textShadow: "0 0 18px rgba(30,80,255,0.45)" }}>TRABALHO</span>
+            <h2 className="font-display text-4xl md:text-6xl leading-[0.9] tracking-tight">
+              O <span className="text-blue-bright" style={{ textShadow: "0 0 14px rgba(30,80,255,0.38)" }}>TRABALHO</span>
             </h2>
           </Reveal>
 
@@ -995,7 +995,7 @@ export function Galeria() {
 
 export function Contato() {
   return (
-    <section id="contato" className="relative py-28 md:py-40 bg-panel2 border-t border-white/10 overflow-hidden scroll-mt-24">
+    <section id="contato" className="relative py-20 md:py-36 bg-panel2 border-t border-white/10 overflow-hidden scroll-mt-24">
       <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[70vw] h-[70vw] max-w-[750px] max-h-[750px] rounded-full pointer-events-none"
            style={{ background: "radial-gradient(circle, rgba(30,80,255,0.2) 0%, rgba(30,80,255,0) 65%)" }} />
       <div className="absolute inset-0 grid-lines opacity-20" />
@@ -1006,7 +1006,7 @@ export function Contato() {
           </div>
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-[0.85] tracking-tight">
+          <h2 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.85] tracking-tight">
             BORA <br /><span className="text-blue-bright text-glow">CONSTRUIR</span>
           </h2>
         </Reveal>
@@ -1036,11 +1036,18 @@ export function Contato() {
               <span className="inline-block transition-transform duration-300 group-hover:translate-x-2">→</span>
             </a>
             {/* Secondary row */}
-            <div className="flex flex-wrap justify-center gap-2.5">
-              <GlowButton href={S.links.instagram} variant="ghost" icon={<IGIcon />}>Instagram</GlowButton>
-              <GlowButton href={S.links.tiktok} variant="ghost" icon={<TikTokIcon />}>TikTok</GlowButton>
-              <GlowButton href={S.links.hevy} variant="dark">Ver Treinos →</GlowButton>
-              <GlowButton href={S.links.parceiroLink} variant="dark">{S.links.parceiroNome}</GlowButton>
+            <div className="flex flex-wrap justify-center gap-2">
+              {/* Ícones compactos no mobile */}
+              <a href={S.links.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                 className="inline-flex items-center gap-2 font-cond tracking-wider uppercase text-sm px-4 py-2.5 border border-white/15 text-white/60 hover:border-blue/50 hover:text-blue-bright transition-all duration-200">
+                <IGIcon className="w-4 h-4" /><span className="hidden sm:inline">Instagram</span>
+              </a>
+              <a href={S.links.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok"
+                 className="inline-flex items-center gap-2 font-cond tracking-wider uppercase text-sm px-4 py-2.5 border border-white/15 text-white/60 hover:border-blue/50 hover:text-blue-bright transition-all duration-200">
+                <TikTokIcon className="w-4 h-4" /><span className="hidden sm:inline">TikTok</span>
+              </a>
+              <GlowButton href={S.links.hevy} variant="dark">Hevy →</GlowButton>
+              <GlowButton href={S.links.parceiroLink} variant="dark" className="hidden sm:inline-flex">{S.links.parceiroNome}</GlowButton>
             </div>
           </div>
         </Reveal>
@@ -1059,7 +1066,7 @@ const HEVY_EXERCISES = [
 
 export function TreinosHevy() {
   return (
-    <section className="relative py-24 md:py-36 overflow-hidden border-y border-white/10">
+    <section className="relative py-16 md:py-32 overflow-hidden border-y border-white/10">
       {/* Ambient glow — right side, behind the panel */}
       <div className="absolute inset-0 grid-lines opacity-25 pointer-events-none" />
       <div className="absolute -top-10 right-0 w-[60vw] h-[90%] max-w-[680px] rounded-full pointer-events-none"
@@ -1077,10 +1084,10 @@ export function TreinosHevy() {
             {/* Title block */}
             <Reveal delay={60}>
               <h2 className="font-display leading-none tracking-tight">
-                <span className="block text-[12vw] sm:text-[9vw] lg:text-[5.8rem] text-white mb-2">TREINO</span>
-                <span className="block text-[12vw] sm:text-[9vw] lg:text-[5.8rem] text-blue-bright text-glow mb-4">REGISTRADO.</span>
-                <span className="block text-[12vw] sm:text-[9vw] lg:text-[5.8rem] text-white mb-5">EVOLUÇÃO</span>
-                <span className="block text-[12vw] sm:text-[9vw] lg:text-[5.8rem] stroke-text-blue">COMPROVADA.</span>
+                <span className="block text-[9.5vw] sm:text-[7.5vw] lg:text-[4.8rem] text-white mb-1.5">TREINO</span>
+                <span className="block text-[9.5vw] sm:text-[7.5vw] lg:text-[4.8rem] text-blue-bright text-glow mb-3">REGISTRADO.</span>
+                <span className="block text-[9.5vw] sm:text-[7.5vw] lg:text-[4.8rem] text-white mb-4">EVOLUÇÃO</span>
+                <span className="block text-[9.5vw] sm:text-[7.5vw] lg:text-[4.8rem] stroke-text-blue">COMPROVADA.</span>
               </h2>
             </Reveal>
 
@@ -1221,8 +1228,8 @@ export function TreinosHevy() {
               </a>
 
               {/* ── Corner accents ── */}
-              <div className="absolute top-0 right-0 w-9 h-9 border-r-2 border-t-2 border-blue/35 pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-9 h-9 border-l-2 border-b-2 border-blue/35 pointer-events-none" />
+              <div className="absolute top-0 right-0 w-7 h-7 border-r border-t border-blue/20 pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-7 h-7 border-l border-b border-blue/20 pointer-events-none" />
             </div>
           </Reveal>
 
