@@ -7,7 +7,7 @@ export const S = {
     altura: "1,79 m",
     peso: "68 kg",
     idade: 15,
-    inicioIdade: 11,
+    inicioIdade: 12,
   },
 
   links: {

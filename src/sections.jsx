@@ -196,10 +196,10 @@ export function Hero() {
   const fraseLinhas = S.atleta.fraseHero.split("\n");
 
   const infoCards = [
-    { num: "15",   label: "ANOS DE IDADE" },
-    { num: "11",   label: "INÍCIO DO TREINO" },
-    { num: "2027", label: "MUSCLE CONTEST" },
-    { num: "365",  label: "DIAS DE FOCO" },
+    { num: "15",                            label: "ANOS DE IDADE",   hide: false },
+    { num: String(S.atleta.inicioIdade),    label: "INÍCIO DO TREINO", hide: true  },
+    { num: "2027",                          label: "MUSCLE CONTEST",  hide: false },
+    { num: "365",                           label: "DIAS DE FOCO",    hide: true  },
   ];
 
   return (
@@ -220,33 +220,33 @@ export function Hero() {
       <div className="absolute inset-0 z-[1] pointer-events-none"
            style={{ background: "linear-gradient(100deg, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.8) 38%, rgba(10,10,10,0.18) 62%, rgba(10,10,10,0) 80%)" }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 w-full py-20 md:py-0 pointer-events-none">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 w-full py-12 md:py-0 pointer-events-none">
         <div className="max-w-3xl">
 
-          {/* Badge + tagline */}
-          <div className="flex flex-wrap items-center gap-3 mb-5 pointer-events-auto">
+          {/* Badge + tagline — tagline oculta no mobile */}
+          <div className="flex flex-wrap items-center gap-3 mb-4 md:mb-5 pointer-events-auto">
             <span className="font-mono text-[11px] tracking-widest text-blue-bright uppercase px-2 py-1 border border-blue/40 bg-blue/5">EST. 2023</span>
-            <span className="font-mono tracking-[0.18em] text-white/40 text-xs uppercase">{S.atleta.tagline}</span>
+            <span className="hidden sm:inline font-mono tracking-[0.18em] text-white/40 text-xs uppercase">{S.atleta.tagline}</span>
           </div>
 
-          {/* Main title */}
+          {/* Main title — menor no mobile para não extrapolar */}
           <h1 className="font-display leading-[0.9] tracking-tight">
             {fraseLinhas.map((l, i) => {
               const last = i === fraseLinhas.length - 1;
-              const mt = i === 1 ? "mt-4 md:mt-6" : last ? "mt-2 md:mt-3" : "";
+              const mt = i === 1 ? "mt-3 md:mt-6" : last ? "mt-1.5 md:mt-3" : "";
               return (
-                <span key={i} className={`block text-[13.5vw] sm:text-[11vw] md:text-[7.5rem] xl:text-[9rem] ${last ? "text-blue-bright text-glow" : "text-white"} ${mt}`}>
+                <span key={i} className={`block text-[11.5vw] sm:text-[11vw] md:text-[7.5rem] xl:text-[9rem] ${last ? "text-blue-bright text-glow" : "text-white"} ${mt}`}>
                   {l}
                 </span>
               );
             })}
           </h1>
 
-          {/* Info cards */}
-          <div className="mt-9 grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-lg pointer-events-auto">
+          {/* Info cards — 2 no mobile, 4 no desktop */}
+          <div className="mt-6 md:mt-9 grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-lg pointer-events-auto">
             {infoCards.map(c => (
               <div key={c.label}
-                   className="relative overflow-hidden bg-ink/65 backdrop-blur border border-white/10 hover:border-blue/45 px-3 py-3.5 transition-colors duration-300 group cursor-default"
+                   className={`relative overflow-hidden bg-ink/65 backdrop-blur border border-white/10 hover:border-blue/45 px-3 py-3 md:py-3.5 transition-colors duration-300 group cursor-default ${c.hide ? "hidden sm:block" : ""}`}
                    onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 0 22px rgba(30,80,255,0.28)"; }}
                    onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; }}>
                 <div className="absolute bottom-0 left-0 h-px w-0 bg-blue-bright group-hover:w-full transition-all duration-500" />
@@ -256,8 +256,8 @@ export function Hero() {
             ))}
           </div>
 
-          {/* Live badge */}
-          <div className="mt-8 inline-flex items-center gap-3 pointer-events-auto border-l-2 border-blue pl-4">
+          {/* Live badge — oculto no mobile */}
+          <div className="hidden md:inline-flex mt-8 items-center gap-3 pointer-events-auto border-l-2 border-blue pl-4">
             <span className="relative flex h-2.5 w-2.5 shrink-0">
               <span className="absolute inline-flex h-full w-full rounded-full bg-blue-bright opacity-75" style={{ animation: "flicker 1.6s infinite" }} />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-bright" />
@@ -267,17 +267,19 @@ export function Hero() {
             </p>
           </div>
 
-          {/* CTA buttons */}
-          <div className="mt-7 flex flex-wrap gap-3 pointer-events-auto">
+          {/* CTA buttons — primário full-width no mobile */}
+          <div className="mt-6 md:mt-7 flex flex-col sm:flex-row flex-wrap gap-2.5 md:gap-3 pointer-events-auto">
             <a href={S.links.linktree} target="_blank" rel="noopener noreferrer"
-               className="group inline-flex items-center gap-3 font-cond tracking-wider uppercase text-lg md:text-xl px-7 py-4 bg-blue text-white transition-all duration-300 hover:bg-blue-bright hover:shadow-[0_0_44px_rgba(58,120,255,0.7)]"
+               className="group inline-flex items-center justify-center sm:justify-start gap-3 font-cond tracking-wider uppercase text-lg md:text-xl px-7 py-3.5 md:py-4 bg-blue text-white transition-all duration-300 hover:bg-blue-bright hover:shadow-[0_0_44px_rgba(58,120,255,0.7)]"
                style={{ boxShadow: "0 0 24px rgba(30,80,255,0.35), inset 0 1px 0 rgba(255,255,255,0.07)" }}>
               Todos os links
               <span className="inline-block transition-transform duration-300 group-hover:translate-x-1.5">→</span>
             </a>
-            <GlowButton href={S.links.instagram} variant="ghost" icon={<IGIcon />}>Instagram</GlowButton>
-            <GlowButton href={S.links.tiktok} variant="ghost" icon={<TikTokIcon />}>TikTok</GlowButton>
-            <GlowButton href={S.links.hevy} variant="dark">Treinos / Hevy</GlowButton>
+            <div className="flex gap-2.5">
+              <GlowButton href={S.links.instagram} variant="ghost" icon={<IGIcon />}>Instagram</GlowButton>
+              <GlowButton href={S.links.tiktok} variant="ghost" icon={<TikTokIcon />}>TikTok</GlowButton>
+              <GlowButton href={S.links.hevy} variant="dark" className="hidden sm:inline-flex">Treinos / Hevy</GlowButton>
+            </div>
           </div>
         </div>
       </div>
