@@ -21,9 +21,9 @@ export const S = {
   jornada: {
     titulo: "A JORNADA",
     paragrafos: [
-      "Comecei cedo, aos 11 anos, quando a musculação ainda era curiosidade. Com o tempo, o treino deixou de ser apenas rotina e passou a fazer parte de quem eu sou: disciplina, foco e vontade de evoluir todos os dias.",
-      "4 anos depois, sigo na academia todo dia construindo a base de quem quer subir no palco. Não é hype, é processo: cada série, cada refeição, cada noite de sono conta.",
-      "O objetivo é claro — competir no fisiculturismo em 2027, no Muscle Contest. Daqui até lá, é trabalho silencioso e consistência absurda.",
+      "Comecei cedo, aos 11 anos, quando a musculação ainda era apenas curiosidade. Com o tempo, o treino deixou de ser apenas rotina e passou a fazer parte de quem eu sou: disciplina, foco e vontade de evoluir todos os dias.",
+      "Quatro anos depois, sigo na academia construindo a base de quem quer subir no palco. Não é hype. É processo. Cada série, cada refeição e cada noite de sono contam.",
+      "O objetivo é claro: competir no fisiculturismo em 2027, no Muscle Contest. Até lá, é trabalho silencioso, consistência e evolução diária.",
     ],
   },
 
@@ -46,9 +46,10 @@ export const S = {
 
   timeline: [
     { ano: "2023", titulo: "PRIMEIROS PASSOS", texto: "Aos 11 anos, começou como curiosidade. Com o tempo, virou rotina, disciplina e a primeira base de um sonho maior.", src: "/assets/pietro-2023.png", pos: "center 12%" },
-    { ano: "2024", titulo: "CONSISTÊNCIA", texto: "Rotina firme, físico tomando forma.", src: "/assets/pietro2024.png" },
-    { ano: "2025", titulo: "EVOLUÇÃO", texto: "Físico evoluindo, foco redobrado.", src: "/assets/pietro2025.jpg" },
-    { ano: "2026", titulo: "AGORA", texto: "Definição e foco total na construção pro palco.", src: "/assets/foto5.png" },
+    { ano: "2024", titulo: "CONSISTÊNCIA", texto: "Rotina firme, físico tomando forma e mentalidade ficando cada vez mais forte.", src: "/assets/pietro2024.png" },
+    { ano: "2025", titulo: "EVOLUÇÃO", texto: "Físico evoluindo, foco redobrado e preparação mais séria.", src: "/assets/pietro2025.jpg" },
+    { ano: "2026", titulo: "AGORA", texto: "Definição, intensidade e foco total na construção para o palco.", src: "/assets/foto5.png" },
+    { ano: "2027", titulo: "PALCO", texto: "O próximo capítulo da jornada: Muscle Contest.", src: null },
   ],
 
   galeria: [
