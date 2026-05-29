@@ -182,6 +182,26 @@ export function initDumbbell(canvas) {
       window.removeEventListener("mousemove", onPointer);
       window.removeEventListener("touchmove", onPointer);
       window.removeEventListener("scroll", onScroll);
+
+      const disposedMaterials = new Set();
+      const disposedTextures = new Set();
+      scene.traverse(obj => {
+        if (!obj.isMesh) return;
+        obj.geometry && obj.geometry.dispose();
+        const materials = Array.isArray(obj.material) ? obj.material : [obj.material];
+        materials.forEach(material => {
+          if (!material || disposedMaterials.has(material)) return;
+          Object.values(material).forEach(value => {
+            if (value && value.isTexture && !disposedTextures.has(value)) {
+              value.dispose();
+              disposedTextures.add(value);
+            }
+          });
+          material.dispose();
+          disposedMaterials.add(material);
+        });
+      });
+
       renderer.dispose();
     },
   };

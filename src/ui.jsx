@@ -1,25 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
 
-const revealReg = [];
-let revealTicking = false;
-
-function startTicker() {
-  if (revealTicking) return;
-  revealTicking = true;
-  setInterval(() => {
-    const vh = window.innerHeight;
-    for (let i = revealReg.length - 1; i >= 0; i--) {
-      const item = revealReg[i];
-      if (!item.el || !item.el.isConnected) { revealReg.splice(i, 1); continue; }
-      const r = item.el.getBoundingClientRect();
-      if (r.top < vh * item.ratio) { item.fn(); revealReg.splice(i, 1); }
-    }
-  }, 100);
-}
-
 export function registerReveal(el, fn, ratio) {
-  startTicker();
-  revealReg.push({ el, fn, ratio });
+  if (!el) return () => {};
+  if (!("IntersectionObserver" in window)) {
+    fn();
+    return () => {};
+  }
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry.isIntersecting) return;
+      fn();
+      observer.disconnect();
+    },
+    { rootMargin: `0px 0px -${Math.round((1 - ratio) * 100)}% 0px` }
+  );
+
+  observer.observe(el);
+  return () => observer.disconnect();
 }
 
 export function Reveal({ children, delay = 0, as = "div", className = "" }) {
@@ -27,7 +25,14 @@ export function Reveal({ children, delay = 0, as = "div", className = "" }) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    registerReveal(el, () => setTimeout(() => el.classList.add("in"), delay), 0.9);
+    let timeoutId;
+    const unregister = registerReveal(el, () => {
+      timeoutId = window.setTimeout(() => el.classList.add("in"), delay);
+    }, 0.9);
+    return () => {
+      unregister();
+      window.clearTimeout(timeoutId);
+    };
   }, [delay]);
   const Tag = as;
   return (
@@ -43,15 +48,20 @@ export function Counter({ value, suffix = "", duration = 1600, className = "" })
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    registerReveal(el, () => {
+    let intervalId;
+    const unregister = registerReveal(el, () => {
       const start = performance.now();
-      const id = setInterval(() => {
+      intervalId = window.setInterval(() => {
         const t = Math.min((performance.now() - start) / duration, 1);
         const eased = 1 - Math.pow(1 - t, 3);
         setDisplay(Math.round(eased * value));
-        if (t >= 1) clearInterval(id);
+        if (t >= 1) window.clearInterval(intervalId);
       }, 1000 / 60);
     }, 0.92);
+    return () => {
+      unregister();
+      window.clearInterval(intervalId);
+    };
   }, [value, duration]);
   return (
     <span ref={ref} className={className}>
@@ -107,7 +117,7 @@ export function ImageSlot({ label = "FOTO", src = null, className = "", ratio = 
   if (src) {
     return (
       <div className={`relative overflow-hidden ${ratio} ${className}`}>
-        <img src={src} alt={label} loading="lazy" className="w-full h-full object-cover" style={{ objectPosition: position }} />
+        <img src={src} alt={label} loading="lazy" decoding="async" className="w-full h-full object-cover" style={{ objectPosition: position }} />
       </div>
     );
   }

@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { S } from './data';
 import { Reveal, Counter, IGIcon, TikTokIcon, GlowButton, SectionLabel, ImageSlot } from './ui';
-import { initDumbbell } from './dumbbell3d';
 
 // ── LOADER ───────────────────────────────────────────────────────────────────
 
@@ -135,7 +134,13 @@ export function Nav() {
           </div>
 
           {/* Hamburger */}
-          <button className="lg:hidden p-2 -mr-2" onClick={() => setOpen(o => !o)} aria-label="Menu">
+          <button
+            className="lg:hidden p-2 -mr-2"
+            onClick={() => setOpen(o => !o)}
+            aria-label="Menu"
+            aria-controls="mobile-menu"
+            aria-expanded={open}
+          >
             <div className="w-6 h-5 flex flex-col justify-between">
               <span className={`block h-0.5 bg-white transition-all duration-300 origin-center ${open ? "rotate-45 translate-y-[9px]" : ""}`} />
               <span className={`block h-0.5 bg-white transition-all duration-300 ${open ? "opacity-0 scale-x-0" : ""}`} />
@@ -145,7 +150,7 @@ export function Nav() {
         </div>
 
         {/* Mobile menu */}
-        <div className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${open ? "max-h-[540px] opacity-100" : "max-h-0 opacity-0"}`}>
+        <div id="mobile-menu" className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${open ? "max-h-[540px] opacity-100" : "max-h-0 opacity-0"}`}>
           <div className="bg-ink/98 backdrop-blur-xl border-t border-white/8 px-5 pt-4 pb-6">
             <div className="flex flex-col mb-5">
               {items.map(([t, h]) => (
@@ -174,8 +179,18 @@ export function Hero() {
   const canvasRef = useRef(null);
   useEffect(() => {
     if (!canvasRef.current) return;
-    const inst = initDumbbell(canvasRef.current);
-    return () => inst && inst.destroy && inst.destroy();
+    let cancelled = false;
+    let inst;
+
+    import('./dumbbell3d').then(({ initDumbbell }) => {
+      if (cancelled || !canvasRef.current) return;
+      inst = initDumbbell(canvasRef.current);
+    });
+
+    return () => {
+      cancelled = true;
+      inst && inst.destroy && inst.destroy();
+    };
   }, []);
 
   const fraseLinhas = S.atleta.fraseHero.split("\n");
@@ -293,7 +308,7 @@ export function PartnerStrip() {
                    border: "1px solid rgba(58,120,255,0.2)",
                    boxShadow: "0 0 70px rgba(30,80,255,0.14), 0 30px 80px rgba(0,0,0,0.45)",
                  }}>
-              <img src="/assets/montelest.jpeg" alt="Monte Leste" className="w-full h-full object-cover" />
+              <img src="/assets/montelest.webp" alt="Monte Leste" loading="lazy" decoding="async" className="w-full h-full object-cover" />
               <div className="absolute inset-0"
                    style={{ background: "linear-gradient(135deg, rgba(10,10,10,0) 50%, rgba(13,26,58,0.55) 100%)" }} />
               {/* Badge */}
@@ -504,7 +519,7 @@ function TimelineCardDesktop({ t, index, total }) {
              e.currentTarget.style.borderColor = isCurrent ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.08)";
              e.currentTarget.style.boxShadow = "none";
            }}>
-        <img src={t.src} alt={t.titulo}
+        <img src={t.src} alt={t.titulo} loading="lazy" decoding="async"
              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
              style={{ objectPosition: t.pos || "center" }} />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/15 to-transparent" />
@@ -605,7 +620,7 @@ export function Evolucao() {
                   {t.src ? (
                     <div className="relative overflow-hidden aspect-[16/9] border"
                          style={{ borderColor: isCurrent ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.08)" }}>
-                      <img src={t.src} alt={t.titulo}
+                      <img src={t.src} alt={t.titulo} loading="lazy" decoding="async"
                            className="w-full h-full object-cover"
                            style={{ objectPosition: t.pos || "center" }} />
                       <div className="absolute inset-0 bg-gradient-to-r from-ink/40 to-transparent" />
@@ -730,59 +745,73 @@ const GALERIA_META = [
 
 function GaleriaCell({ g, onOpen, fill = false, idx = 0, featured = false }) {
   const meta = GALERIA_META[idx] || {};
-  return (
-    <div
-      className={`group relative overflow-hidden cursor-default ${fill ? "h-full" : ""}`}
-      style={{
-        border: "1px solid rgba(255,255,255,0.06)",
-        aspectRatio: fill ? undefined : "3/4",
-        background: "#080808",
-      }}
-      onClick={() => g.src && onOpen({ ...g, caption: meta.caption })}
-    >
-      {g.src ? (
-        <>
-          {/* Blurred bg — fills letterbox gaps without leaving hard black borders */}
-          <img
-            src={g.src} alt="" aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
-            style={{ filter: "blur(32px)", transform: "scale(1.25)", opacity: 0.2 }}
-          />
-          {/* Main image — contain: fully visible, no crop */}
-          <img
-            src={g.src} alt={g.label}
-            className="relative w-full h-full object-contain z-10 transition-transform duration-700 group-hover:scale-[1.015]"
-          />
-          {/* Bottom vignette */}
-          <div className="absolute inset-0 z-20 bg-gradient-to-t from-ink/70 via-transparent to-transparent pointer-events-none" />
-          {/* Hover darkening */}
-          <div className="absolute inset-0 z-20 bg-black/0 group-hover:bg-black/20 transition-colors duration-500 pointer-events-none" />
-          {/* Index */}
-          <div className="absolute top-3 left-3 z-30 font-mono text-[9px] tracking-[0.3em] text-white/20 uppercase select-none">
-            {String(idx + 1).padStart(2, "0")}
-          </div>
-          {/* Featured tag */}
-          {featured && meta.tag && (
-            <div className="absolute top-3 right-3 z-30">
-              <span className="font-mono text-[9px] tracking-[0.22em] text-white/45 uppercase px-2 py-1 border border-white/10 bg-ink/55 backdrop-blur">
-                {meta.tag}
-              </span>
-            </div>
-          )}
-          {/* Caption on hover */}
-          <div className="absolute bottom-0 left-0 right-0 z-30 px-4 py-4 translate-y-full group-hover:translate-y-0 transition-transform duration-350"
-               style={{ cursor: "pointer" }}>
-            <p className="font-mono text-xs text-white/75 lowercase tracking-wide">{meta.caption}</p>
-          </div>
-        </>
-      ) : (
-        <div className="w-full h-full min-h-[180px] flex flex-col items-center justify-center bg-panel gap-2 select-none">
-          <div className="font-mono text-[10px] tracking-[0.3em] text-white/12 uppercase">{meta.caption}</div>
-          <div className="h-px w-12 bg-white/[0.06]" />
-          <div className="font-mono text-[9px] tracking-[0.22em] text-white/8 uppercase">em breve</div>
+  const className = `group relative block w-full overflow-hidden appearance-none p-0 text-left ${g.src ? "cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-bright focus-visible:ring-offset-2 focus-visible:ring-offset-ink" : "cursor-default"} ${fill ? "h-full" : ""}`;
+  const style = {
+    border: "1px solid rgba(255,255,255,0.06)",
+    aspectRatio: fill ? undefined : "3/4",
+    background: "#080808",
+  };
+
+  const content = g.src ? (
+    <>
+      {/* Blurred bg — fills letterbox gaps without leaving hard black borders */}
+      <img
+        src={g.src} alt="" aria-hidden="true" loading="lazy" decoding="async"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+        style={{ filter: "blur(32px)", transform: "scale(1.25)", opacity: 0.2 }}
+      />
+      {/* Main image — contain: fully visible, no crop */}
+      <img
+        src={g.src} alt={g.label} loading="lazy" decoding="async"
+        className="relative w-full h-full object-contain z-10 transition-transform duration-700 group-hover:scale-[1.015]"
+      />
+      {/* Bottom vignette */}
+      <div className="absolute inset-0 z-20 bg-gradient-to-t from-ink/70 via-transparent to-transparent pointer-events-none" />
+      {/* Hover darkening */}
+      <div className="absolute inset-0 z-20 bg-black/0 group-hover:bg-black/20 transition-colors duration-500 pointer-events-none" />
+      {/* Index */}
+      <div className="absolute top-3 left-3 z-30 font-mono text-[9px] tracking-[0.3em] text-white/20 uppercase select-none">
+        {String(idx + 1).padStart(2, "0")}
+      </div>
+      {/* Featured tag */}
+      {featured && meta.tag && (
+        <div className="absolute top-3 right-3 z-30">
+          <span className="font-mono text-[9px] tracking-[0.22em] text-white/45 uppercase px-2 py-1 border border-white/10 bg-ink/55 backdrop-blur">
+            {meta.tag}
+          </span>
         </div>
       )}
+      {/* Caption on hover */}
+      <div className="absolute bottom-0 left-0 right-0 z-30 px-4 py-4 translate-y-full group-hover:translate-y-0 transition-transform duration-350">
+        <p className="font-mono text-xs text-white/75 lowercase tracking-wide">{meta.caption}</p>
+      </div>
+    </>
+  ) : (
+    <div className="w-full h-full min-h-[180px] flex flex-col items-center justify-center bg-panel gap-2 select-none">
+      <div className="font-mono text-[10px] tracking-[0.3em] text-white/12 uppercase">{meta.caption}</div>
+      <div className="h-px w-12 bg-white/[0.06]" />
+      <div className="font-mono text-[9px] tracking-[0.22em] text-white/8 uppercase">em breve</div>
     </div>
+  );
+
+  if (!g.src) {
+    return (
+      <div className={className} style={style}>
+        {content}
+      </div>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      className={className}
+      style={style}
+      onClick={() => onOpen({ ...g, caption: meta.caption })}
+      aria-label={`Abrir foto: ${g.label}`}
+    >
+      {content}
+    </button>
   );
 }
 
@@ -881,15 +910,18 @@ export function Galeria() {
         <div className="md:hidden">
           {/* Main photo: full width, natural height — no forced crop */}
           <Reveal>
-            <div className="relative overflow-hidden mb-2.5 cursor-pointer"
+            <button
+                 type="button"
+                 className="relative block w-full overflow-hidden mb-2.5 cursor-pointer appearance-none p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-bright focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
                  style={{ border: "1px solid rgba(255,255,255,0.06)", background: "#080808" }}
-                 onClick={() => S.galeria[0].src && setLightbox({ ...S.galeria[0], caption: GALERIA_META[0].caption })}>
+                 onClick={() => S.galeria[0].src && setLightbox({ ...S.galeria[0], caption: GALERIA_META[0].caption })}
+                 aria-label={`Abrir foto: ${S.galeria[0].label}`}>
               {/* Blur bg */}
-              <img src={S.galeria[0].src} alt="" aria-hidden="true"
+              <img src={S.galeria[0].src} alt="" aria-hidden="true" loading="lazy" decoding="async"
                    className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
                    style={{ filter: "blur(28px)", transform: "scale(1.2)", opacity: 0.2 }} />
               {/* Full image, natural dimensions */}
-              <img src={S.galeria[0].src} alt={S.galeria[0].label}
+              <img src={S.galeria[0].src} alt={S.galeria[0].label} loading="lazy" decoding="async"
                    className="relative w-full h-auto block z-10" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-transparent to-transparent z-20 pointer-events-none" />
               <div className="absolute top-3 left-3 z-30 font-mono text-[9px] tracking-[0.3em] text-white/20 uppercase">01</div>
@@ -901,7 +933,7 @@ export function Galeria() {
               <div className="absolute bottom-3 left-4 z-30">
                 <p className="font-mono text-xs text-white/60 lowercase tracking-wide">{GALERIA_META[0].caption}</p>
               </div>
-            </div>
+            </button>
           </Reveal>
 
           {/* Remaining photos in 2-col */}
@@ -921,9 +953,13 @@ export function Galeria() {
           className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-10"
           style={{ background: "rgba(5,5,7,0.97)", backdropFilter: "blur(24px)" }}
           onClick={() => setLightbox(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Foto ampliada"
         >
           <button
             className="absolute top-5 right-5 font-mono tracking-widest text-xs text-white/35 hover:text-white/80 transition-colors z-10 flex items-center gap-2 px-3 py-2 border border-white/10 hover:border-white/25 bg-ink/60 uppercase"
+            aria-label="Fechar foto ampliada"
             onClick={() => setLightbox(null)}>
             ESC ✕
           </button>
@@ -933,7 +969,7 @@ export function Galeria() {
             onClick={e => e.stopPropagation()}
           >
             <img
-              src={lightbox.src} alt={lightbox.label}
+              src={lightbox.src} alt={lightbox.label} decoding="async"
               className="max-h-[80vh] max-w-full w-auto object-contain"
               style={{ border: "1px solid rgba(255,255,255,0.07)" }}
             />

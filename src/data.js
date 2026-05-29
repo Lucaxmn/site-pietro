@@ -43,20 +43,20 @@ export const S = {
     { dia: "E", foco: "BRAÇOS + CORE", exercicios: ["Rosca direta", "Tríceps francês", "Rosca scott", "Abdominal infra", "Prancha"] },
   ],
 
-  retrato: "/assets/pietro-front.jpeg",
+  retrato: "/assets/pietro-front.webp",
 
   timeline: [
-    { ano: "2023", titulo: "PRIMEIROS PASSOS", texto: "Aos 12 anos, começou como curiosidade. Com o tempo, virou rotina, disciplina e a primeira base de um sonho maior.", src: "/assets/pietro-2023.png", pos: "center 12%" },
-    { ano: "2024", titulo: "CONSISTÊNCIA", texto: "Rotina firme, físico tomando forma e mentalidade ficando cada vez mais forte.", src: "/assets/pietro2024.png" },
-    { ano: "2025", titulo: "EVOLUÇÃO", texto: "Físico evoluindo, foco redobrado e preparação mais séria.", src: "/assets/pietro2025.jpg" },
-    { ano: "2026", titulo: "AGORA", texto: "Definição, intensidade e foco total na construção para o palco.", src: "/assets/foto5.png" },
+    { ano: "2023", titulo: "PRIMEIROS PASSOS", texto: "Aos 12 anos, começou como curiosidade. Com o tempo, virou rotina, disciplina e a primeira base de um sonho maior.", src: "/assets/pietro-2023.webp", pos: "center 12%" },
+    { ano: "2024", titulo: "CONSISTÊNCIA", texto: "Rotina firme, físico tomando forma e mentalidade ficando cada vez mais forte.", src: "/assets/pietro2024.webp" },
+    { ano: "2025", titulo: "EVOLUÇÃO", texto: "Físico evoluindo, foco redobrado e preparação mais séria.", src: "/assets/pietro2025.webp" },
+    { ano: "2026", titulo: "AGORA", texto: "Definição, intensidade e foco total na construção para o palco.", src: "/assets/foto5.webp" },
     { ano: "2027", titulo: "PALCO", texto: "O próximo capítulo da jornada: Muscle Contest.", src: null },
   ],
 
   galeria: [
-    { src: "/assets/foto4.png", label: "FRONT DOUBLE BICEPS" },
-    { src: "/assets/foto5.png", label: "SIDE POSE" },
-    { src: "/assets/pietro-costas.png", label: "COSTAS" },
+    { src: "/assets/foto4.webp", label: "FRONT DOUBLE BICEPS" },
+    { src: "/assets/foto5.webp", label: "SIDE POSE" },
+    { src: "/assets/pietro-costas.webp", label: "COSTAS" },
     { src: null, label: "PERNAS" },
     { src: null, label: "BRAÇO" },
     { src: null, label: "TREINO" },
