@@ -16,6 +16,7 @@ export const S = {
     linktree: "https://linktr.ee/PietroNagel?utm_source=linktree_profile_share&ltsid=33b60d26-64a3-4ce6-95bb-d2f73a867d18",
     parceiroNome: "MONTE LESTE",
     parceiroLink: "https://www.monteleste.com.br/?utm_source=influenciador&utm_medium=social&utm_campaign=nagel",
+    hevy: "https://hevy.com/user/pietro_nagel",
   },
 
   jornada: {
@@ -45,7 +46,7 @@ export const S = {
   retrato: "/assets/pietro-front.jpeg",
 
   timeline: [
-    { ano: "2023", titulo: "PRIMEIROS PASSOS", texto: "Aos 11 anos, começou como curiosidade. Com o tempo, virou rotina, disciplina e a primeira base de um sonho maior.", src: "/assets/pietro-2023.png", pos: "center 12%" },
+    { ano: "2023", titulo: "PRIMEIROS PASSOS", texto: "Aos 12 anos, começou como curiosidade. Com o tempo, virou rotina, disciplina e a primeira base de um sonho maior.", src: "/assets/pietro-2023.png", pos: "center 12%" },
     { ano: "2024", titulo: "CONSISTÊNCIA", texto: "Rotina firme, físico tomando forma e mentalidade ficando cada vez mais forte.", src: "/assets/pietro2024.png" },
     { ano: "2025", titulo: "EVOLUÇÃO", texto: "Físico evoluindo, foco redobrado e preparação mais séria.", src: "/assets/pietro2025.jpg" },
     { ano: "2026", titulo: "AGORA", texto: "Definição, intensidade e foco total na construção para o palco.", src: "/assets/foto5.png" },

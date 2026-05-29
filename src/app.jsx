@@ -1,4 +1,4 @@
-import { Nav, Hero, PartnerStrip, Jornada, Evolucao, Galeria, Contato, Footer } from './sections';
+import { Nav, Hero, PartnerStrip, Jornada, Evolucao, TreinosHevy, Galeria, Contato, Footer } from './sections';
 
 export default function App() {
   return (
@@ -9,6 +9,7 @@ export default function App() {
         <PartnerStrip />
         <Jornada />
         <Evolucao />
+        <TreinosHevy />
         <Galeria />
         <Contato />
       </main>
