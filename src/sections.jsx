@@ -860,14 +860,6 @@ export function Galeria() {
             </h2>
           </Reveal>
 
-          <Reveal delay={130}>
-            <div className="flex items-center gap-4 mt-4">
-              <div className="h-px w-full max-w-[3rem] bg-white/10" />
-              <p className="font-mono text-[11px] tracking-[0.18em] text-white/30 uppercase">
-                Registros reais da construção. Sem palco ainda. Só processo.
-              </p>
-            </div>
-          </Reveal>
         </div>
 
         {/* ── Desktop: editorial 2fr/1fr grid ───── */}
