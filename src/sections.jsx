@@ -425,8 +425,8 @@ export function PartnerStrip() {
         </div>
 
         {/* Right photo */}
-        <div className="hidden lg:block w-[26%] shrink-0">
-          <div className="relative overflow-hidden aspect-[3/4]"
+        <div className="w-full lg:w-[26%] shrink-0">
+          <div className="relative overflow-hidden aspect-[4/3] lg:aspect-[3/4]"
                style={{
                  border: "1px solid rgba(58,120,255,0.15)",
                  boxShadow: "0 0 50px rgba(30,80,255,0.1), 0 20px 60px rgba(0,0,0,0.5)",
