@@ -999,7 +999,7 @@ function VideoTreino() {
       <div className="relative aspect-[4/5] bg-ink overflow-hidden">
         <video
           ref={videoRef}
-          src="/assets/video.MOV"
+          src="/assets/video.mp4"
           aria-label="Vídeo de treino de Pietro Nagel"
           autoPlay
           muted
