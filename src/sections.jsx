@@ -957,18 +957,60 @@ export function Contato() {
 
 function VideoTreino() {
   const videoRef = useRef(null);
+  const manualPausedRef = useRef(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const video = videoRef.current;
     if (!video) return;
-    if (mq.matches) {
-      video.pause();
-    }
-    const onChange = (e) => { if (e.matches) video.pause(); else video.play().catch(() => {}); };
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
+
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const reducedMotion = () => mq.matches;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !reducedMotion() && !manualPausedRef.current) {
+          video.play().then(() => setIsPaused(false)).catch(() => {});
+        } else {
+          video.pause();
+          setIsPaused(true);
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(video);
+
+    const onMqChange = (e) => {
+      if (e.matches) {
+        video.pause();
+        setIsPaused(true);
+      } else if (!manualPausedRef.current) {
+        video.play().then(() => setIsPaused(false)).catch(() => {});
+      }
+    };
+    mq.addEventListener("change", onMqChange);
+
+    return () => {
+      observer.disconnect();
+      mq.removeEventListener("change", onMqChange);
+    };
   }, []);
+
+  const toggleVideo = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      manualPausedRef.current = false;
+      video.play().then(() => setIsPaused(false)).catch(() => {});
+      return;
+    }
+
+    manualPausedRef.current = true;
+    video.pause();
+    setIsPaused(true);
+  };
 
   return (
     <div className="relative border border-blue/25 overflow-hidden"
@@ -1007,10 +1049,29 @@ function VideoTreino() {
           playsInline
           preload="metadata"
           className="w-full h-full object-cover"
+          onPlay={() => setIsPaused(false)}
+          onPause={() => setIsPaused(true)}
         />
         {/* Vinheta sutil nas bordas */}
         <div className="absolute inset-0 pointer-events-none"
              style={{ boxShadow: "inset 0 0 40px rgba(10,10,10,0.55)" }} />
+        <button
+          type="button"
+          onClick={toggleVideo}
+          aria-label={isPaused ? "Reproduzir vídeo de treino" : "Pausar vídeo de treino"}
+          title={isPaused ? "Reproduzir" : "Pausar"}
+          className="absolute bottom-3 right-3 z-10 inline-flex h-10 w-10 items-center justify-center border border-white/20 bg-ink/70 text-white/75 backdrop-blur transition-all duration-200 hover:border-blue/60 hover:text-blue-bright focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-bright focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+        >
+          {isPaused ? (
+            <svg className="h-4 w-4 translate-x-px" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          ) : (
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
+            </svg>
+          )}
+        </button>
       </div>
 
       {/* Caption */}
