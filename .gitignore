@@ -4,3 +4,5 @@ dist
 .env.local
 /assets/
 /uploads/
+*.cjs
+*.mjs

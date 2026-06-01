@@ -93,8 +93,8 @@ export function GlowButton({ href, children, icon, variant = "solid", className 
   const base = "group relative inline-flex items-center gap-2.5 font-cond tracking-wider uppercase text-base md:text-lg px-6 py-3 transition-all duration-300";
   const styles = {
     solid: "bg-blue text-white hover:bg-blue-bright hover:shadow-[0_0_35px_rgba(58,120,255,0.7)]",
-    ghost: "border border-white/20 text-white hover:border-blue hover:text-blue-bright hover:shadow-[0_0_30px_rgba(30,80,255,0.5)] bg-white/[0.02]",
-    dark: "bg-panel border border-white/10 text-white hover:border-blue hover:shadow-[0_0_30px_rgba(30,80,255,0.45)]",
+    ghost: "border border-white/35 text-white hover:border-blue-bright hover:text-blue-bright hover:shadow-[0_0_30px_rgba(30,80,255,0.5)] bg-white/[0.04]",
+    dark: "bg-panel border border-white/25 text-white hover:border-blue hover:shadow-[0_0_30px_rgba(30,80,255,0.45)]",
   };
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" className={`${base} ${styles[variant]} ${className}`}>

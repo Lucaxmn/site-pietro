@@ -1,36 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { S } from './data';
 import { Reveal, Counter, IGIcon, TikTokIcon, GlowButton, SectionLabel, ImageSlot } from './ui';
-
-// ── LOADER ───────────────────────────────────────────────────────────────────
-
-export function Loader({ progress }) {
-  return (
-    <div className="fixed inset-0 z-[100] bg-ink flex flex-col items-center justify-center grid-lines">
-      <div className="relative text-center px-6">
-        <div className="font-mono tracking-[0.45em] text-blue-bright text-xs md:text-sm mb-5 animate-pulse uppercase">
-          Carregando
-        </div>
-        <h1 className="font-display text-6xl md:text-8xl leading-[0.85] tracking-tight">
-          <span className="block text-white text-glow" style={{ animation: "flicker 2s infinite" }}>PIETRO</span>
-          <span className="block stroke-text-blue">NAGEL</span>
-        </h1>
-        <div className="mt-10 w-64 md:w-80 mx-auto">
-          <div className="flex justify-between font-mono text-[10px] text-white/40 mb-2 uppercase tracking-widest">
-            <span>Est. 2023</span>
-            <span className="text-blue-bright">{Math.round(progress)}%</span>
-          </div>
-          <div className="h-[2px] w-full bg-white/8 overflow-hidden">
-            <div
-              className="h-full bg-blue transition-[width] duration-150 ease-out"
-              style={{ width: progress + "%", boxShadow: "0 0 16px rgba(58,120,255,1)" }}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // ── TOP LINKS BAR ────────────────────────────────────────────────────────────
 
@@ -176,22 +146,6 @@ export function Nav() {
 // ── HERO ─────────────────────────────────────────────────────────────────────
 
 export function Hero() {
-  const canvasRef = useRef(null);
-  useEffect(() => {
-    if (!canvasRef.current) return;
-    let cancelled = false;
-    let inst;
-
-    import('./dumbbell3d').then(({ initDumbbell }) => {
-      if (cancelled || !canvasRef.current) return;
-      inst = initDumbbell(canvasRef.current);
-    });
-
-    return () => {
-      cancelled = true;
-      inst && inst.destroy && inst.destroy();
-    };
-  }, []);
 
   const fraseLinhas = S.atleta.fraseHero.split("\n");
 
@@ -199,87 +153,121 @@ export function Hero() {
     { num: "15",                            label: "ANOS DE IDADE",   hide: false },
     { num: String(S.atleta.inicioIdade),    label: "INÍCIO DO TREINO", hide: true  },
     { num: "2027",                          label: "MUSCLE CONTEST",  hide: false },
-    { num: "365",                           label: "DIAS DE FOCO",    hide: true  },
   ];
 
   return (
-    <section id="top" className="relative min-h-[100svh] flex items-center overflow-hidden">
+    <section id="top" className="relative flex flex-col justify-start overflow-hidden" style={{ minHeight: "calc(100svh - 6.75rem)" }}>
       {/* Background glows */}
-      <div className="absolute top-1/3 -right-20 w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] rounded-full pointer-events-none"
-           style={{ background: "radial-gradient(circle, rgba(30,80,255,0.32) 0%, rgba(30,80,255,0) 65%)" }} />
-      <div className="absolute -bottom-32 -left-32 w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full pointer-events-none"
-           style={{ background: "radial-gradient(circle, rgba(10,43,204,0.22) 0%, rgba(10,43,204,0) 65%)" }} />
-      <div className="absolute inset-0 grid-lines opacity-25" />
+      <div className="absolute top-1/3 right-[10%] w-[45vw] h-[45vw] max-w-[480px] max-h-[480px] rounded-full pointer-events-none"
+           style={{ background: "radial-gradient(circle, rgba(30,80,255,0.18) 0%, rgba(30,80,255,0) 65%)" }} />
+      <div className="absolute bottom-0 -left-24 w-[35vw] h-[35vw] max-w-[400px] max-h-[400px] rounded-full pointer-events-none"
+           style={{ background: "radial-gradient(circle, rgba(10,43,204,0.14) 0%, rgba(10,43,204,0) 65%)" }} />
+      <div className="absolute inset-0 grid-lines opacity-[0.18]" />
 
-      {/* 3D canvas */}
-      <div className="absolute inset-0 z-0">
-        <canvas ref={canvasRef} className="w-full h-full" />
+      {/* Hero photo — direita, desktop, corpo inteiro sem crop vertical */}
+      <div className="absolute right-0 top-0 bottom-0 w-[52%] z-[1] pointer-events-none hidden lg:block overflow-hidden">
+        <img
+          src="/assets/fotohomepage.png"
+          alt="Pietro Nagel"
+          loading="eager"
+          decoding="async"
+          className="w-full h-full object-cover"
+          style={{
+            objectPosition: "center 38%",
+            filter: "brightness(1.12) contrast(1.04) saturate(0.9)",
+          }}
+        />
+        {/* Blend lateral — fusão com o texto */}
+        <div className="absolute inset-0" style={{
+          background: "linear-gradient(to right, rgba(10,10,10,1) 0%, rgba(10,10,10,0.82) 20%, rgba(10,10,10,0.28) 44%, rgba(10,10,10,0) 64%)"
+        }} />
+        {/* Fade inferior */}
+        <div className="absolute inset-0" style={{
+          background: "linear-gradient(to top, rgba(10,10,10,0.65) 0%, rgba(10,10,10,0.08) 22%, rgba(10,10,10,0) 38%)"
+        }} />
+        {/* Fade superior */}
+        <div className="absolute inset-0" style={{
+          background: "linear-gradient(to bottom, rgba(10,10,10,0.18) 0%, rgba(10,10,10,0) 12%)"
+        }} />
       </div>
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 z-[1] pointer-events-none"
-           style={{ background: "linear-gradient(100deg, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.8) 38%, rgba(10,10,10,0.18) 62%, rgba(10,10,10,0) 80%)" }} />
+      {/* Overlay horizontal — protege legibilidade do texto */}
+      <div className="absolute inset-0 z-[2] pointer-events-none" style={{
+        background: "linear-gradient(100deg, rgba(10,10,10,0.99) 0%, rgba(10,10,10,0.96) 30%, rgba(10,10,10,0.55) 50%, rgba(10,10,10,0) 64%)"
+      }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 w-full py-12 md:py-0 pointer-events-none">
-        <div className="max-w-3xl">
+      {/* Conteúdo */}
+      <div className="relative z-[3] max-w-7xl mx-auto pl-4 pr-5 md:pl-6 md:pr-8 w-full pointer-events-none"
+           style={{ paddingTop: "clamp(2rem, 4vh, 3.5rem)", paddingBottom: "clamp(1rem, 1.5vh, 1.5rem)" }}>
+        <div className="max-w-[600px] lg:max-w-[55%]">
 
-          {/* Badge + tagline — tagline oculta no mobile */}
-          <div className="flex flex-wrap items-center gap-3 mb-4 md:mb-5 pointer-events-auto">
-            <span className="font-mono text-[11px] tracking-widest text-blue-bright uppercase px-2 py-1 border border-blue/40 bg-blue/5">EST. 2023</span>
-            <span className="hidden sm:inline font-mono tracking-[0.18em] text-white/40 text-xs uppercase">{S.atleta.tagline}</span>
+          {/* Selo + tagline */}
+          <div className="flex flex-wrap items-center gap-3 mb-4 pointer-events-auto">
+            <span className="font-mono text-[11px] tracking-widest text-blue-bright uppercase px-2 py-1 border border-blue/40 bg-blue/5">
+              EST. 2023
+            </span>
+            <span className="hidden sm:inline font-mono tracking-[0.18em] text-white/40 text-xs uppercase">
+              {S.atleta.tagline}
+            </span>
           </div>
 
-          {/* Main title — menor no mobile para não extrapolar */}
-          <h1 className="font-display leading-[0.9] tracking-tight">
+          {/* Título principal — linhas espaçadas, sem sobreposição */}
+          <h1 className="font-display leading-none tracking-normal">
             {fraseLinhas.map((l, i) => {
               const last = i === fraseLinhas.length - 1;
-              const mt = i === 1 ? "mt-3 md:mt-6" : last ? "mt-1.5 md:mt-3" : "";
               return (
-                <span key={i} className={`block text-[11.5vw] sm:text-[11vw] md:text-[7.5rem] xl:text-[9rem] ${last ? "text-blue-bright text-glow" : "text-white"} ${mt}`}>
+                <span key={i} className={`block text-[10.5vw] sm:text-[10vw] md:text-[5.5rem] xl:text-[6.5rem] ${last ? "text-blue-bright text-glow" : "text-white"} ${i > 0 ? "mt-2 md:mt-3" : ""}`}>
                   {l}
                 </span>
               );
             })}
           </h1>
 
-          {/* Info cards — 2 no mobile, 4 no desktop */}
-          <div className="mt-6 md:mt-9 grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-lg pointer-events-auto">
+          {/* Cards de stats — compactos, 3 colunas */}
+          <div className="mt-4 md:mt-6 grid grid-cols-3 gap-2 max-w-[280px] sm:max-w-xs pointer-events-auto">
             {infoCards.map(c => (
               <div key={c.label}
-                   className={`relative overflow-hidden bg-ink/65 backdrop-blur border border-white/10 hover:border-blue/45 px-3 py-3 md:py-3.5 transition-colors duration-300 group cursor-default ${c.hide ? "hidden sm:block" : ""}`}
-                   onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 0 22px rgba(30,80,255,0.28)"; }}
+                   className="relative overflow-hidden bg-ink/75 backdrop-blur border border-white/[0.09] hover:border-blue/40 px-2.5 py-2 transition-colors duration-300 group cursor-default"
+                   onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 0 18px rgba(30,80,255,0.22)"; }}
                    onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; }}>
                 <div className="absolute bottom-0 left-0 h-px w-0 bg-blue-bright group-hover:w-full transition-all duration-500" />
-                <div className="font-display text-2xl md:text-3xl text-white leading-none group-hover:text-blue-bright transition-colors duration-300">{c.num}</div>
-                <div className="font-mono text-[9px] tracking-widest text-blue-bright/55 mt-2 uppercase leading-tight">{c.label}</div>
+                <div className="font-display text-lg md:text-xl text-white leading-none group-hover:text-blue-bright transition-colors duration-300">{c.num}</div>
+                <div className="font-mono text-[7.5px] tracking-widest text-blue-bright/50 mt-1 uppercase leading-tight">{c.label}</div>
               </div>
             ))}
           </div>
 
-          {/* Live badge — oculto no mobile */}
-          <div className="hidden md:inline-flex mt-8 items-center gap-3 pointer-events-auto border-l-2 border-blue pl-4">
+          {/* Frase de preparação — ponte visual entre stats e CTAs */}
+          <div className="hidden md:inline-flex mt-5 items-center gap-3 pointer-events-auto border-l-[3px] border-blue pl-4">
             <span className="relative flex h-2.5 w-2.5 shrink-0">
               <span className="absolute inline-flex h-full w-full rounded-full bg-blue-bright opacity-75" style={{ animation: "flicker 1.6s infinite" }} />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-bright" />
             </span>
-            <p className="font-cond tracking-wide text-xl md:text-2xl uppercase text-white leading-tight">
+            <p className="font-cond tracking-widest text-xl md:text-[1.35rem] uppercase text-white/95 leading-tight">
               Preparação para o <span className="text-blue-bright text-glow">Muscle Contest 2027</span>
             </p>
           </div>
 
-          {/* CTA buttons — primário full-width no mobile */}
-          <div className="mt-6 md:mt-7 flex flex-col sm:flex-row flex-wrap gap-2.5 md:gap-3 pointer-events-auto">
+          {/* CTA buttons — linha única no desktop, 2 linhas equilibradas no mobile */}
+          <div className="mt-4 md:mt-5 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 pointer-events-auto">
             <a href={S.links.linktree} target="_blank" rel="noopener noreferrer"
-               className="group inline-flex items-center justify-center sm:justify-start gap-3 font-cond tracking-wider uppercase text-lg md:text-xl px-7 py-3.5 md:py-4 bg-blue text-white transition-all duration-300 hover:bg-blue-bright hover:shadow-[0_0_44px_rgba(58,120,255,0.7)]"
-               style={{ boxShadow: "0 0 24px rgba(30,80,255,0.35), inset 0 1px 0 rgba(255,255,255,0.07)" }}>
+               className="group inline-flex items-center justify-center sm:justify-start gap-2.5 font-cond tracking-wider uppercase text-lg md:text-xl px-6 md:px-7 py-3 bg-blue text-white transition-all duration-300 hover:bg-blue-bright hover:shadow-[0_0_44px_rgba(58,120,255,0.75)] whitespace-nowrap"
+               style={{ boxShadow: "0 0 24px rgba(30,80,255,0.45), inset 0 1px 0 rgba(255,255,255,0.1)" }}>
               Todos os links
               <span className="inline-block transition-transform duration-300 group-hover:translate-x-1.5">→</span>
             </a>
-            <div className="flex gap-2.5">
-              <GlowButton href={S.links.instagram} variant="ghost" icon={<IGIcon />}>Instagram</GlowButton>
-              <GlowButton href={S.links.tiktok} variant="ghost" icon={<TikTokIcon />}>TikTok</GlowButton>
-              <GlowButton href={S.links.hevy} variant="dark" className="hidden sm:inline-flex">Treinos / Hevy</GlowButton>
+            <div className="flex gap-2">
+              <GlowButton href={S.links.instagram} variant="ghost" icon={<IGIcon />} className="flex-1 sm:flex-none justify-center sm:justify-start">Instagram</GlowButton>
+              <GlowButton href={S.links.tiktok} variant="ghost" icon={<TikTokIcon />} className="flex-1 sm:flex-none justify-center sm:justify-start">TikTok</GlowButton>
+              <GlowButton href={S.links.hevy} variant="dark" className="hidden md:inline-flex">Treinos / Hevy</GlowButton>
             </div>
+          </div>
+
+          {/* Mobile: frase de preparação após botões */}
+          <div className="md:hidden mt-4 inline-flex items-center gap-2.5 pointer-events-auto border-l-2 border-blue pl-3">
+            <p className="font-cond tracking-wide text-sm uppercase text-white/75 leading-tight">
+              Preparação para o <span className="text-blue-bright">Muscle Contest 2027</span>
+            </p>
           </div>
         </div>
       </div>
@@ -300,10 +288,10 @@ export function PartnerStrip() {
       <div className="absolute inset-0 pointer-events-none"
            style={{ backgroundImage: "linear-gradient(to right, transparent 0%, rgba(30,80,255,0.05) 50%, transparent 100%)" }} />
 
-      <div className="max-w-7xl mx-auto px-5 md:px-10 py-12 md:py-20 flex flex-col lg:flex-row items-center justify-between gap-10 md:gap-14">
+      <div className="max-w-7xl mx-auto px-5 md:px-10 py-12 md:py-20 flex flex-col lg:flex-row items-center gap-10 md:gap-12">
 
         {/* Brand image */}
-        <div className="w-full lg:w-[40%] shrink-0">
+        <div className="w-full lg:w-[28%] shrink-0">
           <div className="relative">
             <div className="relative overflow-hidden aspect-[4/3]"
                  style={{
@@ -398,6 +386,26 @@ export function PartnerStrip() {
             <span className="font-mono text-[10px] tracking-widest text-white/20 uppercase">monteleste.com.br</span>
           </div>
         </div>
+
+        {/* Right photo */}
+        <div className="hidden lg:block w-[26%] shrink-0">
+          <div className="relative overflow-hidden aspect-[3/4]"
+               style={{
+                 border: "1px solid rgba(58,120,255,0.15)",
+                 boxShadow: "0 0 50px rgba(30,80,255,0.1), 0 20px 60px rgba(0,0,0,0.5)",
+               }}>
+            <img src="/assets/monteleste2.jpeg" alt="Pietro Nagel com Monte Leste" loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
+            <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(8,8,8,0.45) 0%, transparent 50%)" }} />
+            <div className="absolute bottom-3 left-3 right-3">
+              <div className="flex items-center gap-2">
+                <span className="h-px flex-1 bg-blue/20" />
+                <span className="font-mono text-[8px] tracking-[0.22em] text-white/30 uppercase">parceria oficial</span>
+                <span className="h-px flex-1 bg-blue/20" />
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );
@@ -664,77 +672,6 @@ export function Evolucao() {
   );
 }
 
-// ── TREINO (not rendered, kept for reference) ─────────────────────────────────
-
-export function Treino() {
-  const [active, setActive] = useState(0);
-  return (
-    <section id="treino" className="relative py-24 md:py-36">
-      <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <Reveal><SectionLabel num="03">Rotina de treino</SectionLabel></Reveal>
-        <Reveal delay={80}>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-            <h2 className="font-display text-5xl md:text-7xl leading-[0.9] tracking-tight">
-              O <span className="text-blue-bright text-glow">SPLIT</span>
-            </h2>
-            <p className="text-white/50 max-w-sm md:text-right">Divisão de 5 dias. Volume alto, foco em construção.</p>
-          </div>
-        </Reveal>
-        <Reveal delay={160}>
-          <div className="bg-panel border border-white/10 box-glow p-7 md:p-10">
-            <div className="flex items-center gap-4 mb-6">
-              <span className="font-display text-6xl md:text-8xl text-blue-bright text-glow leading-none">{S.split[active].dia}</span>
-              <div>
-                <div className="font-mono text-[10px] tracking-widest text-white/40 uppercase">Foco do dia</div>
-                <h3 className="font-display text-3xl md:text-4xl tracking-wide">{S.split[active].foco}</h3>
-              </div>
-            </div>
-            <ul className="grid sm:grid-cols-2 gap-x-10 gap-y-1">
-              {S.split[active].exercicios.map((e, i) => (
-                <li key={i} className="flex items-center gap-4 py-3 border-b border-white/[0.08]">
-                  <span className="font-mono text-blue-bright text-sm w-6">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="text-white/85 text-lg">{e}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-// ── NUMEROS (not rendered, kept for reference) ────────────────────────────────
-
-export function Numeros() {
-  return (
-    <section id="numeros" className="relative py-24 md:py-36 bg-panel2 border-y border-white/10 overflow-hidden">
-      <div className="absolute inset-0 grid-lines opacity-50" />
-      <div className="relative max-w-7xl mx-auto px-5 md:px-8">
-        <Reveal><SectionLabel num="04">Os números</SectionLabel></Reveal>
-        <Reveal delay={80}>
-          <h2 className="font-display text-5xl md:text-7xl leading-[0.9] tracking-tight mb-14">
-            PROVA <span className="stroke-text">VIVA</span>
-          </h2>
-        </Reveal>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 border border-white/10">
-          {S.stats.map((s, i) => (
-            <Reveal key={i} delay={i * 90}>
-              <div className="bg-ink p-7 md:p-9 h-full hover:bg-panel transition-colors group">
-                <div className="font-display text-5xl md:text-7xl text-white group-hover:text-blue-bright transition-colors leading-none">
-                  <Counter value={s.valor} suffix={s.suffix} />
-                </div>
-                <div className="font-cond tracking-[0.2em] text-blue-bright text-sm uppercase mt-4">{s.label}</div>
-                {s.nota && <div className="text-white/40 text-sm mt-1">{s.nota}</div>}
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ── GALERIA ───────────────────────────────────────────────────────────────────
 
 const GALERIA_META = [
@@ -751,19 +688,19 @@ function GaleriaCell({ g, onOpen, fill = false, idx = 0, featured = false }) {
   const className = `group relative block w-full overflow-hidden appearance-none p-0 text-left ${g.src ? "cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-bright focus-visible:ring-offset-2 focus-visible:ring-offset-ink" : "cursor-default"} ${fill ? "h-full" : ""}`;
   const style = {
     border: "1px solid rgba(255,255,255,0.06)",
-    aspectRatio: fill ? undefined : "3/4",
+    aspectRatio: fill ? undefined : "2/3",
     background: "#080808",
   };
 
   const content = g.src ? (
     <>
-      {/* Blurred bg — fills letterbox gaps without leaving hard black borders */}
+      {/* Blurred bg */}
       <img
         src={g.src} alt="" aria-hidden="true" loading="lazy" decoding="async"
         className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
         style={{ filter: "blur(32px)", transform: "scale(1.25)", opacity: 0.2 }}
       />
-      {/* Main image — contain: fully visible, no crop */}
+      {/* Main image */}
       <img
         src={g.src} alt={g.label} loading="lazy" decoding="async"
         className="relative w-full h-full object-contain z-10 transition-transform duration-700 group-hover:scale-[1.015]"
@@ -862,84 +799,24 @@ export function Galeria() {
 
         </div>
 
-        {/* ── Desktop: editorial 2fr/1fr grid ───── */}
-        <div className="hidden md:block">
-          <Reveal>
-            <div className="grid gap-2.5"
-                 style={{ gridTemplateColumns: "2fr 1fr", gridTemplateRows: "360px 360px" }}>
-              {/* Main photo: spans 2 rows */}
-              <div style={{ gridColumn: 1, gridRow: "1 / 3" }}>
-                <GaleriaCell g={S.galeria[0]} onOpen={setLightbox} fill idx={0} featured />
-              </div>
-              <div style={{ gridColumn: 2, gridRow: 1 }}>
-                <GaleriaCell g={S.galeria[1]} onOpen={setLightbox} fill idx={1} />
-              </div>
-              <div style={{ gridColumn: 2, gridRow: 2 }}>
-                <GaleriaCell g={S.galeria[2]} onOpen={setLightbox} fill idx={2} />
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Placeholder row — smaller, more subtle */}
-          <div className="grid grid-cols-3 gap-2.5 mt-2.5">
-            {S.galeria.slice(3).map((g, i) => (
-              <Reveal key={i} delay={i * 60}>
-                <GaleriaCell g={g} onOpen={setLightbox} idx={i + 3} />
-              </Reveal>
+        {/* ── Grid 2×2 — desktop e mobile ── */}
+        <Reveal>
+          <div className="grid grid-cols-2 gap-2.5 max-w-4xl mx-auto">
+            {S.galeria.filter(g => g.src).slice(0, 4).map((g, i) => (
+              <GaleriaCell key={i} g={g} onOpen={setLightbox} idx={i} featured={i === 0} />
             ))}
           </div>
+        </Reveal>
 
-          {/* Editorial bottom note */}
-          <Reveal delay={200}>
-            <div className="flex items-center gap-4 mt-5">
-              <div className="h-px flex-1 bg-white/[0.05]" />
-              <span className="font-mono text-[9px] tracking-[0.35em] text-white/15 uppercase">
-                Pietro Nagel · Mais registros em breve
-              </span>
-              <div className="h-px flex-1 bg-white/[0.05]" />
-            </div>
-          </Reveal>
-        </div>
-
-        {/* ── Mobile: principal primeiro, depois 2-col ─── */}
-        <div className="md:hidden">
-          {/* Main photo: full width, natural height — no forced crop */}
-          <Reveal>
-            <button
-                 type="button"
-                 className="relative block w-full overflow-hidden mb-2.5 cursor-pointer appearance-none p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-bright focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
-                 style={{ border: "1px solid rgba(255,255,255,0.06)", background: "#080808" }}
-                 onClick={() => S.galeria[0].src && setLightbox({ ...S.galeria[0], caption: GALERIA_META[0].caption })}
-                 aria-label={`Abrir foto: ${S.galeria[0].label}`}>
-              {/* Blur bg */}
-              <img src={S.galeria[0].src} alt="" aria-hidden="true" loading="lazy" decoding="async"
-                   className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
-                   style={{ filter: "blur(28px)", transform: "scale(1.2)", opacity: 0.2 }} />
-              {/* Full image, natural dimensions */}
-              <img src={S.galeria[0].src} alt={S.galeria[0].label} loading="lazy" decoding="async"
-                   className="relative w-full h-auto block z-10" />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-transparent to-transparent z-20 pointer-events-none" />
-              <div className="absolute top-3 left-3 z-30 font-mono text-[9px] tracking-[0.3em] text-white/20 uppercase">01</div>
-              <div className="absolute top-3 right-3 z-30">
-                <span className="font-mono text-[9px] tracking-[0.2em] text-white/40 uppercase px-2 py-1 border border-white/10 bg-ink/55 backdrop-blur">
-                  {GALERIA_META[0].tag}
-                </span>
-              </div>
-              <div className="absolute bottom-3 left-4 z-30">
-                <p className="font-mono text-xs text-white/60 lowercase tracking-wide">{GALERIA_META[0].caption}</p>
-              </div>
-            </button>
-          </Reveal>
-
-          {/* Remaining photos in 2-col */}
-          <div className="grid grid-cols-2 gap-2.5">
-            {S.galeria.slice(1).map((g, i) => (
-              <Reveal key={i} delay={(i % 2) * 60}>
-                <GaleriaCell g={g} onOpen={setLightbox} idx={i + 1} />
-              </Reveal>
-            ))}
+        <Reveal delay={200}>
+          <div className="flex items-center gap-4 mt-5">
+            <div className="h-px flex-1 bg-white/[0.05]" />
+            <span className="font-mono text-[9px] tracking-[0.35em] text-white/15 uppercase">
+              Pietro Nagel · Mais registros em breve
+            </span>
+            <div className="h-px flex-1 bg-white/[0.05]" />
           </div>
-        </div>
+        </Reveal>
       </div>
 
       {/* ── Lightbox ── */}

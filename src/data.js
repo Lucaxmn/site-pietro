@@ -22,7 +22,7 @@ export const S = {
   jornada: {
     titulo: "A JORNADA",
     paragrafos: [
-      "Comecei cedo, aos 11 anos, quando a musculação ainda era apenas curiosidade. Com o tempo, o treino deixou de ser apenas rotina e passou a fazer parte de quem eu sou: disciplina, foco e vontade de evoluir todos os dias.",
+      "Comecei cedo, aos 12 anos, quando a musculação ainda era apenas curiosidade. Com o tempo, o treino deixou de ser apenas rotina e passou a fazer parte de quem eu sou: disciplina, foco e vontade de evoluir todos os dias.",
       "Quatro anos depois, sigo na academia construindo a base de quem quer subir no palco. Não é hype. É processo. Cada série, cada refeição e cada noite de sono contam.",
       "O objetivo é claro: competir no fisiculturismo em 2027, no Muscle Contest. Até lá, é trabalho silencioso, consistência e evolução diária.",
     ],
