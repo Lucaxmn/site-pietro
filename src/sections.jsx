@@ -67,7 +67,7 @@ export function Nav() {
 
           {/* Logo */}
           <a href="#top" className="group font-display tracking-wide leading-none">
-            <span className={`text-white group-hover:text-blue-bright transition-colors duration-250 ${scrolled ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"}`}>
+            <span className={`text-white group-hover:text-blue-bright transition-colors duration-[250ms] ${scrolled ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"}`}>
               PIETRO NAGEL
             </span>
           </a>
@@ -78,7 +78,7 @@ export function Nav() {
               <a key={h} href={h}
                  className="relative font-cond tracking-widest text-lg uppercase text-white/65 hover:text-white transition-colors duration-200 py-2 group">
                 {t}
-                <span className="absolute bottom-0 left-0 w-0 h-px bg-blue-bright transition-all duration-350 group-hover:w-full" />
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-blue-bright transition-all duration-[350ms] group-hover:w-full" />
               </a>
             ))}
           </nav>
@@ -167,7 +167,7 @@ export function Hero() {
       {/* Hero photo — direita, desktop, corpo inteiro sem crop vertical */}
       <div className="absolute right-0 top-0 bottom-0 w-[52%] z-[1] pointer-events-none hidden lg:block overflow-hidden">
         <img
-          src="/assets/fotohomepage.png"
+          src="/assets/fotohomepage.webp"
           alt="Pietro Nagel"
           loading="eager"
           decoding="async"
@@ -270,6 +270,22 @@ export function Hero() {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Foto mobile — faixa abaixo do conteúdo, altura fixa */}
+      <div className="relative z-[3] lg:hidden overflow-hidden" style={{ height: "230px" }}>
+        <img
+          src="/assets/fotohomepage.webp"
+          alt="Pietro Nagel"
+          loading="eager"
+          decoding="async"
+          className="w-full h-full object-cover"
+          style={{ objectPosition: "center 36%", filter: "brightness(1.5) contrast(1.08) saturate(0.88)" }}
+        />
+        {/* Fade de cima — funde com conteúdo (borda fina) */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0) 14%)" }} />
+        {/* Fade de baixo */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,10,10,0.65) 0%, rgba(10,10,10,0) 28%)" }} />
       </div>
 
     </section>
@@ -394,7 +410,7 @@ export function PartnerStrip() {
                  border: "1px solid rgba(58,120,255,0.15)",
                  boxShadow: "0 0 50px rgba(30,80,255,0.1), 0 20px 60px rgba(0,0,0,0.5)",
                }}>
-            <img src="/assets/monteleste2.jpeg" alt="Pietro Nagel com Monte Leste" loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
+            <img src="/assets/monteleste2.webp" alt="Pietro Nagel com Monte Leste" loading="lazy" decoding="async" className="w-full h-full object-cover object-top" />
             <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(8,8,8,0.45) 0%, transparent 50%)" }} />
             <div className="absolute bottom-3 left-3 right-3">
               <div className="flex items-center gap-2">
@@ -441,7 +457,7 @@ export function Jornada() {
                      className="relative group bg-panel border-l-2 border-blue/50 hover:border-blue border-r border-t border-b border-white/8 hover:border-r-blue/25 hover:border-t-blue/25 hover:border-b-blue/25 px-5 py-3.5 transition-all duration-300 cursor-default overflow-hidden"
                      onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 0 22px rgba(30,80,255,0.2)"; }}
                      onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; }}>
-                  <div className="absolute bottom-0 left-0 right-0 h-px bg-blue/0 group-hover:bg-blue/30 transition-colors duration-400" />
+                  <div className="absolute bottom-0 left-0 right-0 h-px bg-blue/0 group-hover:bg-blue/30 transition-colors duration-[400ms]" />
                   <div className="font-mono text-[10px] tracking-widest text-white/35 uppercase">{k}</div>
                   <div className="font-display text-2xl md:text-3xl text-white mt-0.5 group-hover:text-blue-bright transition-colors duration-300">{v}</div>
                 </div>
@@ -722,7 +738,7 @@ function GaleriaCell({ g, onOpen, fill = false, idx = 0, featured = false }) {
         </div>
       )}
       {/* Caption on hover */}
-      <div className="absolute bottom-0 left-0 right-0 z-30 px-4 py-4 translate-y-full group-hover:translate-y-0 transition-transform duration-350">
+      <div className="absolute bottom-0 left-0 right-0 z-30 px-4 py-4 translate-y-full group-hover:translate-y-0 transition-transform duration-[350ms]">
         <p className="font-mono text-xs text-white/75 lowercase tracking-wide">{meta.caption}</p>
       </div>
     </>
@@ -1089,7 +1105,7 @@ export function TreinosHevy() {
 
               {/* ── Footer link ── */}
               <a href={S.links.hevy} target="_blank" rel="noopener noreferrer"
-                 className="group flex items-center justify-between px-5 py-3.5 border-t border-white/[0.07] transition-all duration-250 hover:bg-blue/[0.07]"
+                 className="group flex items-center justify-between px-5 py-3.5 border-t border-white/[0.07] transition-all duration-[250ms] hover:bg-blue/[0.07]"
                  style={{ background: "rgba(30,80,255,0.03)" }}>
                 <span className="font-mono text-[10px] tracking-[0.22em] text-white/30 uppercase">
                   hevy.com/user/pietro_nagel
