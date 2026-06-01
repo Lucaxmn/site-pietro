@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { S } from './data';
 import { Reveal, Counter, IGIcon, TikTokIcon, GlowButton, SectionLabel, ImageSlot } from './ui';
 
@@ -161,7 +161,7 @@ export function Hero() {
 
   const infoCards = [
     { num: "15",                            label: "ANOS DE IDADE",   hide: false },
-    { num: String(S.atleta.inicioIdade),    label: "INÍCIO DO TREINO", hide: true  },
+    { num: String(S.atleta.inicioIdade),    label: "ANOS AO COMEÇAR",  hide: true  },
     { num: "2027",                          label: "MUSCLE CONTEST",  hide: false },
   ];
 
@@ -954,11 +954,79 @@ export function Contato() {
 
 // ── TREINOS NO HEVY ───────────────────────────────────────────────────────────
 
-const HEVY_EXERCISES = [
-  { num: "01", name: "Supino Reto",      sets: "4", reps: "8"  },
-  { num: "02", name: "Supino Inclinado", sets: "3", reps: "10" },
-  { num: "03", name: "Tríceps Corda",    sets: "4", reps: "12" },
-];
+
+function VideoTreino() {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const video = videoRef.current;
+    if (!video) return;
+    if (mq.matches) {
+      video.pause();
+    }
+    const onChange = (e) => { if (e.matches) video.pause(); else video.play().catch(() => {}); };
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  return (
+    <div className="relative border border-blue/25 overflow-hidden"
+         style={{ boxShadow: "0 0 0 1px rgba(58,120,255,0.06), 0 0 70px rgba(30,80,255,0.16), inset 0 0 40px rgba(30,80,255,0.03)" }}>
+
+      {/* Top accent */}
+      <div className="h-px w-full"
+           style={{ background: "linear-gradient(to right, transparent, rgba(58,120,255,0.7) 40%, rgba(58,120,255,0.7) 60%, transparent)" }} />
+
+      {/* Header bar */}
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.07]"
+           style={{ background: "rgba(30,80,255,0.06)" }}>
+        <div className="flex items-center gap-2.5">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-blue-bright opacity-70"
+                  style={{ animation: "flicker 2s infinite" }} />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-bright" />
+          </span>
+          <span className="font-mono text-[11px] tracking-[0.28em] text-white/80 uppercase">Registro de treino</span>
+        </div>
+        <span className="font-mono text-[9px] tracking-[0.22em] px-2 py-0.5 border border-blue/30 text-blue-bright uppercase"
+              style={{ background: "rgba(30,80,255,0.1)" }}>
+          Vídeo real
+        </span>
+      </div>
+
+      {/* Vídeo */}
+      <div className="relative aspect-[4/5] bg-ink overflow-hidden">
+        <video
+          ref={videoRef}
+          src="/assets/video.MOV"
+          aria-label="Vídeo de treino de Pietro Nagel"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="w-full h-full object-cover"
+        />
+        {/* Vinheta sutil nas bordas */}
+        <div className="absolute inset-0 pointer-events-none"
+             style={{ boxShadow: "inset 0 0 40px rgba(10,10,10,0.55)" }} />
+      </div>
+
+      {/* Caption */}
+      <div className="px-4 py-3 border-t border-white/[0.07]"
+           style={{ background: "rgba(30,80,255,0.03)" }}>
+        <p className="font-mono text-[10px] tracking-[0.25em] text-white/30 uppercase">
+          Série real · consistência diária
+        </p>
+      </div>
+
+      {/* Corner accents */}
+      <div className="absolute top-0 right-0 w-6 h-6 border-r border-t border-blue/25 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-6 h-6 border-l border-b border-blue/25 pointer-events-none" />
+    </div>
+  );
+}
 
 export function TreinosHevy() {
   return (
@@ -1018,115 +1086,9 @@ export function TreinosHevy() {
             </Reveal>
           </div>
 
-          {/* ══ RIGHT COL — logbook panel ══ */}
+          {/* ══ RIGHT COL — vídeo de treino real ══ */}
           <Reveal delay={120}>
-            <div className="relative border border-blue/20 overflow-hidden"
-                 style={{
-                   background: "linear-gradient(165deg, #06091a 0%, #080d20 50%, #050810 100%)",
-                   boxShadow: "0 0 0 1px rgba(58,120,255,0.06), 0 0 80px rgba(30,80,255,0.18), inset 0 0 60px rgba(30,80,255,0.04)",
-                 }}>
-
-              {/* ── Top accent line ── */}
-              <div className="h-px w-full"
-                   style={{ background: "linear-gradient(to right, transparent, rgba(58,120,255,0.7) 40%, rgba(58,120,255,0.7) 60%, transparent)" }} />
-
-              {/* ── Header bar ── */}
-              <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/[0.07]"
-                   style={{ background: "rgba(30,80,255,0.06)" }}>
-                <div className="flex items-center gap-3">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full rounded-full bg-blue-bright opacity-70"
-                          style={{ animation: "flicker 2s infinite" }} />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-bright" />
-                  </span>
-                  <span className="font-mono text-[11px] tracking-[0.28em] text-white/80 uppercase">Hevy Logbook</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-[9px] tracking-[0.25em] px-2 py-0.5 border border-blue/30 text-blue-bright uppercase"
-                        style={{ background: "rgba(30,80,255,0.1)" }}>
-                    Perfil público
-                  </span>
-                  <span className="font-mono text-[9px] tracking-widest text-white/20 uppercase hidden sm:block">ATIVO</span>
-                </div>
-              </div>
-
-              {/* ── Session header ── */}
-              <div className="px-5 pt-5 pb-4 border-b border-white/[0.07]">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="font-mono text-[10px] tracking-[0.3em] text-white/35 uppercase mb-1.5">Último treino</p>
-                    <h3 className="font-display text-2xl md:text-3xl tracking-wide text-white leading-none">
-                      PEITO + TRÍCEPS
-                    </h3>
-                  </div>
-                  <div className="shrink-0 text-right">
-                    <p className="font-mono text-[10px] tracking-widest text-blue-bright/60 uppercase">5 exerc.</p>
-                    <p className="font-mono text-[10px] tracking-widest text-blue-bright/60 uppercase">18 séries</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* ── Exercise rows ── */}
-              <div className="px-5 py-1">
-                {HEVY_EXERCISES.map((ex, i) => (
-                  <div key={ex.num}
-                       className={`flex items-center justify-between py-3 ${i < HEVY_EXERCISES.length - 1 ? "border-b border-white/[0.06]" : ""}`}>
-                    <div className="flex items-center gap-3 min-w-0">
-                      <span className="font-mono text-[10px] text-blue-bright/50 shrink-0 w-6">{ex.num}</span>
-                      <span className="font-mono text-xs md:text-sm text-white/65 uppercase tracking-wide truncate">{ex.name}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 shrink-0 ml-3">
-                      <span className="font-display text-base text-white leading-none">{ex.sets}</span>
-                      <span className="font-mono text-[10px] text-white/30">×</span>
-                      <span className="font-display text-base text-white/70 leading-none">{ex.reps}</span>
-                    </div>
-                  </div>
-                ))}
-
-                {/* "more" row */}
-                <a href={S.links.hevy} target="_blank" rel="noopener noreferrer"
-                   className="group flex items-center justify-between py-3 border-t border-white/[0.06] transition-colors duration-200 hover:bg-blue/5 -mx-5 px-5">
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-[10px] text-white/20 w-6">···</span>
-                    <span className="font-mono text-xs text-white/30 uppercase tracking-wide group-hover:text-blue-bright/70 transition-colors">ver treino completo</span>
-                  </div>
-                  <span className="font-mono text-[11px] text-white/20 group-hover:text-blue-bright transition-all duration-200 group-hover:translate-x-1 inline-block">→</span>
-                </a>
-              </div>
-
-              {/* ── Metric strip ── */}
-              <div className="grid grid-cols-3 border-t border-white/[0.07] mt-1">
-                {[
-                  { num: "365",  label: "DIAS / ANO",  blue: false },
-                  { num: "5×",   label: "/ SEMANA",    blue: false },
-                  { num: "2027", label: "PALCO",       blue: true  },
-                ].map((m, i) => (
-                  <div key={m.num}
-                       className={`flex flex-col items-center justify-center py-5 gap-1.5 ${i < 2 ? "border-r border-white/[0.07]" : ""}`}>
-                    <span className="font-display text-2xl md:text-3xl leading-none"
-                          style={{ color: m.blue ? "#3a78ff" : "#fff",
-                                   textShadow: m.blue ? "0 0 28px rgba(58,120,255,0.75)" : "none" }}>
-                      {m.num}
-                    </span>
-                    <span className="font-mono text-[9px] tracking-[0.22em] text-white/25 uppercase">{m.label}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* ── Footer link ── */}
-              <a href={S.links.hevy} target="_blank" rel="noopener noreferrer"
-                 className="group flex items-center justify-between px-5 py-3.5 border-t border-white/[0.07] transition-all duration-[250ms] hover:bg-blue/[0.07]"
-                 style={{ background: "rgba(30,80,255,0.03)" }}>
-                <span className="font-mono text-[10px] tracking-[0.22em] text-white/30 uppercase">
-                  hevy.com/user/pietro_nagel
-                </span>
-                <span className="font-mono text-[11px] text-blue-bright/50 group-hover:text-blue-bright transition-all duration-200 group-hover:translate-x-1 inline-block">→</span>
-              </a>
-
-              {/* ── Corner accents ── */}
-              <div className="absolute top-0 right-0 w-7 h-7 border-r border-t border-blue/20 pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-7 h-7 border-l border-b border-blue/20 pointer-events-none" />
-            </div>
+            <VideoTreino />
           </Reveal>
 
         </div>
