@@ -267,8 +267,8 @@ export function Hero() {
               <span className="inline-block transition-transform duration-300 group-hover:translate-x-1.5">→</span>
             </a>
             <div className="flex gap-2">
-              <GlowButton href={S.links.instagram} variant="ghost" icon={<IGIcon />} className="flex-1 sm:flex-none justify-center sm:justify-start">Instagram</GlowButton>
-              <GlowButton href={S.links.tiktok} variant="ghost" icon={<TikTokIcon />} className="flex-1 sm:flex-none justify-center sm:justify-start">TikTok</GlowButton>
+              <GlowButton href={S.links.instagram} variant="ghost" size="compact" icon={<IGIcon className="w-4 h-4 md:w-5 md:h-5" />} className="flex-1 sm:flex-none justify-center sm:justify-start">Instagram</GlowButton>
+              <GlowButton href={S.links.tiktok} variant="ghost" size="compact" icon={<TikTokIcon className="w-4 h-4 md:w-5 md:h-5" />} className="flex-1 sm:flex-none justify-center sm:justify-start">TikTok</GlowButton>
               <GlowButton href={S.links.hevy} variant="dark" className="hidden md:inline-flex">Treinos / Hevy</GlowButton>
             </div>
           </div>
@@ -935,14 +935,14 @@ export function Contato() {
             <div className="flex flex-wrap justify-center gap-2">
               {/* Ícones compactos no mobile */}
               <a href={S.links.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-                 className="inline-flex items-center gap-2 font-cond tracking-wider uppercase text-sm px-4 py-2.5 border border-white/15 text-white/60 hover:border-blue/50 hover:text-blue-bright transition-all duration-200">
+                 className="inline-flex items-center gap-2 font-cond tracking-wider uppercase text-sm px-4 py-2 border border-white/15 text-white/60 hover:border-blue/50 hover:text-blue-bright transition-all duration-200">
                 <IGIcon className="w-4 h-4" /><span className="hidden sm:inline">Instagram</span>
               </a>
               <a href={S.links.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok"
-                 className="inline-flex items-center gap-2 font-cond tracking-wider uppercase text-sm px-4 py-2.5 border border-white/15 text-white/60 hover:border-blue/50 hover:text-blue-bright transition-all duration-200">
+                 className="inline-flex items-center gap-2 font-cond tracking-wider uppercase text-sm px-4 py-2 border border-white/15 text-white/60 hover:border-blue/50 hover:text-blue-bright transition-all duration-200">
                 <TikTokIcon className="w-4 h-4" /><span className="hidden sm:inline">TikTok</span>
               </a>
-              <GlowButton href={S.links.hevy} variant="dark">Hevy →</GlowButton>
+              <GlowButton href={S.links.hevy} variant="dark" size="compact">Hevy →</GlowButton>
               <GlowButton href={S.links.parceiroLink} variant="dark" className="hidden sm:inline-flex">{S.links.parceiroNome}</GlowButton>
             </div>
           </div>
