@@ -1042,10 +1042,6 @@ function VideoTreino() {
           </span>
           <span className="font-mono text-[11px] tracking-[0.28em] text-white/80 uppercase">Registro de treino</span>
         </div>
-        <span className="font-mono text-[9px] tracking-[0.22em] px-2 py-0.5 border border-blue/30 text-blue-bright uppercase"
-              style={{ background: "rgba(30,80,255,0.1)" }}>
-          Vídeo real
-        </span>
       </div>
 
       {/* Vídeo */}
