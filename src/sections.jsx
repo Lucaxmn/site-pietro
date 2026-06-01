@@ -134,6 +134,15 @@ export function Nav() {
           <div className="absolute inset-0 bg-ink/70 backdrop-blur-sm" />
           <div className={`absolute top-0 left-0 right-0 bg-ink border-b border-white/[0.08] px-5 pt-6 pb-8 transition-transform duration-300 ${open ? "translate-y-0" : "-translate-y-full"}`}
                onClick={e => e.stopPropagation()}>
+            <div className="flex justify-end mb-2">
+              <button onClick={() => setOpen(false)} aria-label="Fechar menu"
+                      className="p-2 -mr-2 text-white/50 hover:text-white transition-colors">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
             <div className="flex flex-col mb-6">
               {items.map(([t, h]) => (
                 <a key={h} href={h} onClick={() => setOpen(false)}
