@@ -47,7 +47,7 @@ export const S = {
 
   timeline: [
     { ano: "2023", titulo: "PRIMEIROS PASSOS", texto: "Aos 12 anos, começou como curiosidade. Com o tempo, virou rotina, disciplina e a primeira base de um sonho maior.", src: "/assets/pietro-2023.webp", pos: "center 12%" },
-    { ano: "2024", titulo: "CONSISTÊNCIA", texto: "Rotina firme, físico tomando forma e mentalidade ficando cada vez mais forte.", src: "/assets/pietro2024.webp" },
+    { ano: "2024", titulo: "CONSISTÊNCIA", texto: "Rotina firme, físico tomando forma e mentalidade ficando cada vez mais forte.", src: "/assets/pietro2024.webp", pos: "center bottom" },
     { ano: "2025", titulo: "EVOLUÇÃO", texto: "Físico evoluindo, foco redobrado e preparação mais séria.", src: "/assets/pietro2025.webp" },
     { ano: "2026", titulo: "AGORA", texto: "Definição, intensidade e foco total na construção para o palco.", src: "/assets/foto5.webp" },
     { ano: "2027", titulo: "PALCO", texto: "O próximo capítulo da jornada: Muscle Contest.", src: null },
