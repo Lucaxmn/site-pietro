@@ -129,9 +129,11 @@ export function Nav() {
           id="mobile-menu"
           aria-hidden={!open}
           className={`fixed inset-0 z-[200] lg:hidden transition-opacity duration-300 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+          onClick={() => setOpen(false)}
         >
-          <div className="absolute inset-0 bg-ink/70 backdrop-blur-sm" onClick={() => setOpen(false)} />
-          <div className={`absolute top-0 left-0 right-0 bg-ink border-b border-white/[0.08] px-5 pt-6 pb-8 transition-transform duration-300 ${open ? "translate-y-0" : "-translate-y-full"}`}>
+          <div className="absolute inset-0 bg-ink/70 backdrop-blur-sm" />
+          <div className={`absolute top-0 left-0 right-0 bg-ink border-b border-white/[0.08] px-5 pt-6 pb-8 transition-transform duration-300 ${open ? "translate-y-0" : "-translate-y-full"}`}
+               onClick={e => e.stopPropagation()}>
             <div className="flex flex-col mb-6">
               {items.map(([t, h]) => (
                 <a key={h} href={h} onClick={() => setOpen(false)}
