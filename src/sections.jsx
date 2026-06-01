@@ -645,11 +645,11 @@ export function Evolucao() {
                   <span className="font-display text-3xl block mb-3" style={yearColor(i)}>{t.ano}</span>
 
                   {t.src ? (
-                    <div className="relative overflow-hidden aspect-[16/9] border"
+                    <div className="relative overflow-hidden aspect-[4/5] border"
                          style={{ borderColor: isCurrent ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.08)" }}>
                       <img src={t.src} alt={t.titulo} loading="lazy" decoding="async"
                            className="w-full h-full object-cover"
-                           style={{ objectPosition: t.pos || "center" }} />
+                           style={{ objectPosition: t.pos || "center top" }} />
                       <div className="absolute inset-0 bg-gradient-to-r from-ink/40 to-transparent" />
                       {isCurrent && (
                         <div className="absolute top-2 right-2 font-mono text-[9px] tracking-widest text-white/45 uppercase border border-white/15 px-2 py-0.5 bg-ink/50">
