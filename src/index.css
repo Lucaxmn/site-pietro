@@ -60,3 +60,9 @@ body {
 
 .marquee-track { animation: marquee 24s linear infinite; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { transition: none; opacity: 1; transform: none; }
+  .marquee-track { animation: none; }
+  @keyframes flicker { 0%,100% { opacity: 1; } }
+}

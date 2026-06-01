@@ -23,13 +23,13 @@ export const S = {
     titulo: "A JORNADA",
     paragrafos: [
       "Comecei cedo, aos 12 anos, quando a musculação ainda era apenas curiosidade. Com o tempo, o treino deixou de ser apenas rotina e passou a fazer parte de quem eu sou: disciplina, foco e vontade de evoluir todos os dias.",
-      "Quatro anos depois, sigo na academia construindo a base de quem quer subir no palco. Não é hype. É processo. Cada série, cada refeição e cada noite de sono contam.",
+      "Três anos depois, sigo na academia construindo a base de quem quer subir no palco. Não é hype. É processo. Cada série, cada refeição e cada noite de sono contam.",
       "O objetivo é claro: competir no fisiculturismo em 2027, no Muscle Contest. Até lá, é trabalho silencioso, consistência e evolução diária.",
     ],
   },
 
   stats: [
-    { valor: 5, suffix: "", label: "ANOS DE TREINO", nota: "Desde os 11" },
+    { valor: 3, suffix: "", label: "ANOS DE TREINO", nota: "Desde os 12" },
     { valor: 15, suffix: "", label: "IDADE", nota: "Mira o palco em 2027" },
     { valor: 179, suffix: "cm", label: "ALTURA", nota: "" },
     { valor: 68, suffix: "kg", label: "PESO ATUAL", nota: "Em construção" },

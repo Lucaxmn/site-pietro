@@ -49,6 +49,11 @@ export function Nav() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
   const items = [
     ["Jornada", "#jornada"],
     ["Evolução", "#evolucao"],
@@ -86,7 +91,7 @@ export function Nav() {
           {/* Desktop actions */}
           <div className="hidden md:flex items-center gap-2">
             <a href={S.links.parceiroLink} target="_blank" rel="noopener noreferrer"
-               className="font-mono tracking-[0.2em] text-xs uppercase px-3.5 py-2 border border-white/12 text-white/60 hover:border-blue/60 hover:text-blue-bright transition-all duration-200">
+               className="font-mono tracking-[0.2em] text-xs uppercase px-3.5 py-2 border border-white/[0.12] text-white/60 hover:border-blue/60 hover:text-blue-bright transition-all duration-200">
               {S.links.parceiroNome}
             </a>
             <a href={S.links.linktree} target="_blank" rel="noopener noreferrer"
@@ -119,18 +124,23 @@ export function Nav() {
           </button>
         </div>
 
-        {/* Mobile menu */}
-        <div id="mobile-menu" className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${open ? "max-h-[540px] opacity-100" : "max-h-0 opacity-0"}`}>
-          <div className="bg-ink/98 backdrop-blur-xl border-t border-white/8 px-5 pt-4 pb-6">
-            <div className="flex flex-col mb-5">
+        {/* Mobile menu — overlay fixed, não empurra conteúdo */}
+        <div
+          id="mobile-menu"
+          aria-hidden={!open}
+          className={`fixed inset-0 z-[200] lg:hidden transition-opacity duration-300 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        >
+          <div className="absolute inset-0 bg-ink/70 backdrop-blur-sm" onClick={() => setOpen(false)} />
+          <div className={`absolute top-0 left-0 right-0 bg-ink border-b border-white/[0.08] px-5 pt-6 pb-8 transition-transform duration-300 ${open ? "translate-y-0" : "-translate-y-full"}`}>
+            <div className="flex flex-col mb-6">
               {items.map(([t, h]) => (
                 <a key={h} href={h} onClick={() => setOpen(false)}
-                   className="font-display text-3xl uppercase py-3.5 text-white/80 hover:text-blue-bright border-b border-white/[0.06] transition-colors tracking-wide">
+                   className="font-display text-4xl uppercase py-4 text-white/80 hover:text-blue-bright border-b border-white/[0.06] transition-colors tracking-wide">
                   {t}
                 </a>
               ))}
             </div>
-            <div className="grid grid-cols-2 gap-2 mt-1">
+            <div className="grid grid-cols-2 gap-2">
               <GlowButton href={S.links.linktree} variant="solid" className="justify-center">Linktree</GlowButton>
               <GlowButton href={S.links.parceiroLink} variant="dark" className="justify-center">{S.links.parceiroNome}</GlowButton>
               <GlowButton href={S.links.instagram} variant="ghost" icon={<IGIcon />} className="justify-center">Instagram</GlowButton>
@@ -454,7 +464,7 @@ export function Jornada() {
             <div className="mt-10 flex flex-wrap gap-3">
               {[["ALTURA", S.atleta.altura], ["PESO", S.atleta.peso], ["IDADE", S.atleta.idade + " anos"]].map(([k, v]) => (
                 <div key={k}
-                     className="relative group bg-panel border-l-2 border-blue/50 hover:border-blue border-r border-t border-b border-white/8 hover:border-r-blue/25 hover:border-t-blue/25 hover:border-b-blue/25 px-5 py-3.5 transition-all duration-300 cursor-default overflow-hidden"
+                     className="relative group bg-panel border-l-2 border-blue/50 hover:border-blue border-r border-t border-b border-white/[0.08] hover:border-r-blue/25 hover:border-t-blue/25 hover:border-b-blue/25 px-5 py-3.5 transition-all duration-300 cursor-default overflow-hidden"
                      onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 0 22px rgba(30,80,255,0.2)"; }}
                      onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; }}>
                   <div className="absolute bottom-0 left-0 right-0 h-px bg-blue/0 group-hover:bg-blue/30 transition-colors duration-[400ms]" />
@@ -744,9 +754,9 @@ function GaleriaCell({ g, onOpen, fill = false, idx = 0, featured = false }) {
     </>
   ) : (
     <div className="w-full h-full min-h-[180px] flex flex-col items-center justify-center bg-panel gap-2 select-none">
-      <div className="font-mono text-[10px] tracking-[0.3em] text-white/12 uppercase">{meta.caption}</div>
+      <div className="font-mono text-[10px] tracking-[0.3em] text-white/[0.12] uppercase">{meta.caption}</div>
       <div className="h-px w-12 bg-white/[0.06]" />
-      <div className="font-mono text-[9px] tracking-[0.22em] text-white/8 uppercase">em breve</div>
+      <div className="font-mono text-[9px] tracking-[0.22em] text-white/[0.08] uppercase">em breve</div>
     </div>
   );
 
@@ -866,7 +876,7 @@ export function Galeria() {
               <span className="h-px w-8 bg-white/10 shrink-0" />
               <div className="text-center">
                 <p className="font-mono text-xs text-white/40 lowercase tracking-wide">{lightbox.caption}</p>
-                <p className="font-mono text-[10px] tracking-[0.3em] text-white/18 uppercase mt-1">Pietro Nagel · 2026</p>
+                <p className="font-mono text-[10px] tracking-[0.3em] text-white/[0.18] uppercase mt-1">Pietro Nagel · 2026</p>
               </div>
               <span className="h-px w-8 bg-white/10 shrink-0" />
             </div>
@@ -905,9 +915,9 @@ export function Contato() {
         {/* Divider */}
         <Reveal delay={200}>
           <div className="flex items-center gap-4 max-w-xs mx-auto mt-10 mb-8">
-            <span className="h-px flex-1 bg-white/8" />
+            <span className="h-px flex-1 bg-white/[0.08]" />
             <span className="font-mono text-[9px] tracking-[0.35em] text-white/20 uppercase">Siga a jornada</span>
-            <span className="h-px flex-1 bg-white/8" />
+            <span className="h-px flex-1 bg-white/[0.08]" />
           </div>
         </Reveal>
 
