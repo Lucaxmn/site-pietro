@@ -58,7 +58,7 @@ body {
 
 @keyframes flicker { 0%,100%{opacity:1;} 50%{opacity:.85;} }
 
-.marquee-track { animation: marquee 24s linear infinite; }
+.marquee-track { animation: marquee 34s linear infinite; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 @media (prefers-reduced-motion: reduce) {

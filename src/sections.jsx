@@ -15,13 +15,13 @@ function TopLinksBar() {
   ];
   return (
     <div className="w-full bg-blue text-white overflow-hidden whitespace-nowrap">
-      <div className="marquee-track inline-flex items-center gap-0 py-1.5">
+      <div className="marquee-track inline-flex items-center gap-0 py-1 md:py-1.5">
         {[0, 1].map(rep => (
           <span key={rep} className="inline-flex items-center">
             {items.map((item, i) => (
               <span key={i} className="inline-flex items-center">
-                <span className="font-mono tracking-[0.18em] text-[11px] uppercase px-5">{item}</span>
-                <span className="text-white/35 text-[10px]">—</span>
+                <span className="font-mono tracking-[0.16em] md:tracking-[0.18em] text-[9px] sm:text-[10px] md:text-[11px] uppercase px-3 sm:px-4 md:px-5">{item}</span>
+                <span className="text-white/35 text-[8px] md:text-[10px]">—</span>
               </span>
             ))}
           </span>
@@ -195,7 +195,7 @@ export function Hero() {
           className="w-full h-full object-cover"
           style={{
             objectPosition: "center 38%",
-            filter: "brightness(1.12) contrast(1.04) saturate(0.9)",
+            filter: "brightness(1.45) contrast(1.04) saturate(0.9)",
           }}
         />
         {/* Blend lateral — fusão com o texto */}
